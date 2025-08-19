@@ -1,0 +1,18 @@
+# netlify.toml (at repo root)
+
+[build]
+	# Build the Vite app inside FRONTEND when deploying
+	command  = "npm run build --prefix FRONTEND"
+	# Serve the built files from FRONTEND/dist
+	publish  = "FRONTEND/dist"
+	# Where your serverless functions live
+	functions = "netlify/functions"
+
+[dev]
+	# Start the Vite dev server in FRONTEND during local dev
+	command    = "npm run dev --prefix FRONTEND"
+	# Vite dev server port (what Vite listens on)
+	targetPort = 5173
+	# Netlify Dev proxy port (what I open in the browser)
+	port       = 8888
+	# Optional: force a specific host if needed

@@ -1,13 +1,29 @@
 // FRONTEND/src/pages/Callback.tsx
 
-// Callback.tsx
-export default function Callback() {
-	const params = new URLSearchParams(window.location.search);
-	const err = params.get("error");
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { handleCallback } from '../auth/spotifyAuth';
+
+
+export const Callback = () => {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		(async () => {
+			try {
+				await handleCallback(window.location.href);
+				navigate("/");	// Go back home after successful login
+			} catch (error) {
+				console.error("Error handling callback:", error);
+			}
+		})();
+	}, [navigate]);
+
+
 
 	return (
 		<div>
-			{err ? `Auth error: ${err}` : "Finishing login..."}
+			Finishing login...
 		</div>
 	);
 }
