@@ -1,5 +1,3 @@
-// FRONTEND/src/components/SearchBar/SearchBar.tsx
-
 // React component for searching Spotify tracks (top 4 results).
 // Uses searchTracksTop4() from our Spotify API client.
 // NOTE: We now return TOP 4 results (kept function name for compatibility).
@@ -8,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { searchTracksTop4, type TrackSummary } from '@/api/spotify';
 import styles from './SearchBar.module.css';	// Import CSS module
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { TrackList } from '@/components/TrackList'; // ⟵ use barrel directly
 
 
 // ---------- Main Component ----------
@@ -85,13 +84,7 @@ export const SearchBar = () => {
 			{error && <div className={styles.error}>{error}</div>}
 
 			{/* Results list */}
-			{/* Extracted into a presentational component to keep SearchBar focused on behavior */}
-			{/* (UI remains the same; CSS classnames for the list were duplicated in TrackList.module.css) */}
-			<TrackListWrapper tracks={results} />
+			<TrackList tracks={results} />
 		</div>
 	);
 };
-
-// Small wrapper keeps import local and avoids changing your existing file tree more than necessary.
-import { TrackList } from "@/components/TrackList";
-const TrackListWrapper = ({ tracks }: { tracks: TrackSummary[] }) => <TrackList tracks={tracks} />;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { login, getAccessToken } from "@/auth/spotifyAuth";
 import { getCurrentUser, type UserProfile } from "@/api/spotify";
-import { SearchBar } from "@/components/SearchBar/SearchBar";
+import { SearchBar } from "@/components/SearchBar";
 
 export const Home = () => {
 	// Track whether we currently have a valid access token.
