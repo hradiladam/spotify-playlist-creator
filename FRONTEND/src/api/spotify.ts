@@ -1,8 +1,8 @@
 // src/api/spotify.ts
-// Thin Spotify Web API client — Step 1: search top 4 tracks.
-// Uses existing OAuth helper: getAccessToken()
-// NOTE: We now limit the search to TOP 4 to mimic Spotify quick search,
-//       but we keep the function name `searchTracksTop4` so your imports stay the same.
+// Thin Spotify Web API client
+//  — Step 1: search top 4 tracks
+//  — Step 2: get current user profile
+
 
 import { getAccessToken } from "../auth/spotifyAuth";
 

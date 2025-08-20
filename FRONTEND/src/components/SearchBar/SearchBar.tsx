@@ -1,12 +1,13 @@
-// src/components/SearchBar.tsx
+// FRONTEND/src/components/SearchBar/SearchBar.tsx
+
 // React component for searching Spotify tracks (top 4 results).
 // Uses searchTracksTop4() from our Spotify API client.
 // NOTE: We now return TOP 4 results (kept function name for compatibility).
 
 import { useEffect, useState } from 'react';
-import { searchTracksTop4, type TrackSummary } from '../../api/spotify';
+import { searchTracksTop4, type TrackSummary } from '@/api/spotify';
 import styles from './SearchBar.module.css';	// Import CSS module
-import { useDebouncedValue } from '../../hooks/useDebouncedValue';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 
 
 // ---------- Main Component ----------
@@ -92,9 +93,5 @@ export const SearchBar = () => {
 };
 
 // Small wrapper keeps import local and avoids changing your existing file tree more than necessary.
-import { TrackList } from '../TrackList';
+import { TrackList } from "@/components/TrackList";
 const TrackListWrapper = ({ tracks }: { tracks: TrackSummary[] }) => <TrackList tracks={tracks} />;
-
-
-// ---------- Utility ----------
-// msToMinSec moved to src/utils/format.ts to be reused across components.

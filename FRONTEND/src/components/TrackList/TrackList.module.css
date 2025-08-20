@@ -1,7 +1,6 @@
-/* This file is used to style the track list component, ensuring it matches the design of the search results. */
+/* FRONTEND/src/components/TrackList.module.css */
 
-/* Duplicates the result-related rules from SearchBar.module.css so the visual
-   stays identical even after extracting the list into its own component. */
+/* This file is used to style the track list component, ensuring it matches the design of the search results. */
 
 
 .results {

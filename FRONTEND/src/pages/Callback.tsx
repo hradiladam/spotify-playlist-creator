@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleCallback } from '../auth/spotifyAuth';
+import { handleCallback } from '@/auth/spotifyAuth';
 
 
 export const Callback = () => {

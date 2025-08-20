@@ -1,12 +1,12 @@
-// FRONTEND/src/components/TrackList.tsx
+// FRONTEND/src/components/TrackList/TrackList.tsx
 
 // Presentational-only component that renders the list of tracks.
 // Keeps SearchBar smaller and easier to test.
 // Reuses the same visual styles you had before.
 
 import styles from "./TrackList.module.css";
-import { type TrackSummary } from "./../api/spotify";
-import { msToMinSec } from "./../utils/format";
+import { type TrackSummary } from "@/api/spotify";
+import { msToMinSec } from "@/utils/format";
 
 type Props = {
 	tracks: TrackSummary[];

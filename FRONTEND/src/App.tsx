@@ -1,8 +1,8 @@
 //FRONTEND/src/App.tsx
 
 import { Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Callback } from "./pages/Callback";
+import { Home } from "@/pages/home/Home";
+import { Callback } from "@/pages/Callback";
 
 export default function App() {
 	return (
