@@ -4,7 +4,8 @@
 //  — Step 2: get current user profile
 
 
-import { getAccessToken } from "../auth/spotifyAuth";
+import { getAccessToken } from "@/auth/spotifyAuth";
+import { z } from "zod";
 
 const API_BASE = "https://api.spotify.com/v1";
 
@@ -67,6 +68,33 @@ export type UserProfile = {
 	images?: Array<{ url: string }>;
 };
 
+// ---------- Zod schemas (minimal) ----------
+
+const zArtist = z.object({
+	name: z.string(),
+});
+
+const zTrackItem = z.object({
+	id: z.string(),
+	uri: z.string(),
+	name: z.string(),
+	artists: z.array(zArtist).default([]),
+	duration_ms: z.number(),
+});
+
+const zSearchTracksResponse = z.object({
+	tracks: z.object({
+		items: z.array(zTrackItem).default([]),
+	}).default({ items: [] }),
+});
+
+const zUserProfile = z.object({
+	id: z.string(),
+	display_name: z.string(),
+	email: z.string().optional(),
+	images: z.array(z.object({ url: z.string().url() })).optional(),
+});
+
 // ---------- Feature: search top 4 tracks ----------
 
 /**
@@ -96,16 +124,17 @@ export const searchTracksTop4 = async (
 	)}`; // NOTE: limit=4 (top 4)
 
 	// Fetch JSON response, typed to expected Spotify structure
-	const data = await fetchJson<{ tracks: { items: any[] } }>(url, { headers });
+	const raw = await fetchJson<unknown>(url, { headers });
 
-	// Map raw Spotify track objects → simplified TrackSummary objects
-	const trackItems = data.tracks?.items ?? [];
+	// Validate & shape with zod (no runtime surprises)
+	const parsed = zSearchTracksResponse.parse(raw);
+	const trackItems = parsed.tracks.items;
 
-	return trackItems.map((track: any) => ({
+	return trackItems.map((track) => ({
 		id: track.id,
 		uri: track.uri,
 		name: track.name,
-		artists: (track.artists ?? []).map((a: any) => a.name).join(", "),
+		artists: track.artists.map((a) => a.name).join(", "),
 		duration_ms: track.duration_ms,
 	}));
 };
@@ -113,5 +142,7 @@ export const searchTracksTop4 = async (
 /** Get the current user's profile (for "Logged-in as ...") */
 export const getCurrentUser = async (): Promise<UserProfile> => {
 	const headers = await buildAuthHeaders();
-	return fetchJson<UserProfile>(`${API_BASE}/me`, { headers });
+	const raw = await fetchJson<unknown>(`${API_BASE}/me`, { headers });
+	const parsed = zUserProfile.parse(raw);
+	return parsed;
 };
