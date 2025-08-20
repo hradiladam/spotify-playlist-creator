@@ -14,6 +14,7 @@
 	justify-content: center;    
 	padding: 0.5rem 0;
 	background: transparent;
+	margin-top: 3rem;      /* keep the bar close beneath the title */
 }
 
 .title {
@@ -36,7 +37,7 @@
 	justify-content: center;
 	/* align-items: center;  <-- causes vertical centering + jump */
 	align-items: flex-start; /* anchor under the header so the bar doesn't move */
-	margin-top: 0.5rem;      /* keep the bar close beneath the title */
+	margin-top: 1rem;      /* keep the bar close beneath the title */
 }
 
 .loginBox {
