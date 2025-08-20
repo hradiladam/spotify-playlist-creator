@@ -7,11 +7,42 @@
 	gap: 0.5rem;
 }
 
+.inputWrapper {
+	position: relative;
+	width: 100%;
+}
 .input {
-	padding: 1rem 1rem;
-	border: 1px solid #dcdcdc;
+	padding: 1rem 2rem 1rem 1rem; /* add right padding for the clear button */
+	border: 1px solid #f8f8f8;
 	border-radius: 8px;
-	font-size: 1rem;
+	font-size: 1.1rem;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* New clear button (the ×) */
+.clearButton {
+	position: absolute;
+	right: 0.75rem;
+	top: 0;
+	bottom: 0;
+	width: 1.5rem;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+	background: transparent;
+	border: none;
+	font-size: 1.6rem;
+	cursor: pointer;
+	color: #a7a7a7;
+	line-height: 1;
+}
+
+.clearButton:hover {
+	color: #fa5c5c;
 }
 
 .statusSlot {

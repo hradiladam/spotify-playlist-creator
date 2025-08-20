@@ -67,10 +67,12 @@ export const SearchBar = () => {
 		return () => { cancelled = true; };
 	}, [debouncedQuery]);
 
+	
 	// ---------------- Render ----------------
-	return (
-		<div className={styles.container}>
-			{/* Input box */}
+return (
+	<div className={styles.container}>
+		{/* Input box with clear button */}
+		<div className={styles.inputWrapper}>
 			<input
 				type="text"
 				value={query}
@@ -78,17 +80,29 @@ export const SearchBar = () => {
 				placeholder="Search for songs..."
 				className={styles.input}
 			/>
+			{/* New clear button: shown only when there's text */}
+			{query && (
+				<button
+					type="button"
+					className={styles.clearButton}
+					onClick={() => setQuery("")}
+					aria-label="Clear search"
+				>
+					×
+				</button>
+			)}
+		</div>
 
-			{/* Reserve a fixed slot for status/error so layout doesn't jump */}
-			<div className={styles.statusSlot}>
-				{loading && <div className={styles.status}>Searching...</div>}
-				{error && <div className={styles.error}>{error}</div>}
-			</div>
+		{/* Reserve a fixed slot for status/error so layout doesn't jump */}
+		<div className={styles.statusSlot}>
+			{loading && <div className={styles.status}>Searching...</div>}
+			{error && <div className={styles.error}>{error}</div>}
+		</div>
 
-			{/* Results list */}
-			{/* Extracted into a presentational component to keep SearchBar focused on behavior */}
-			{/* (UI remains the same; CSS classnames for the list live in TrackList.module.css) */}
-			<TrackList tracks={results} />
+		{/* Results list */}
+		{/* Extracted into a presentational component to keep SearchBar focused on behavior */}
+		{/* (UI remains the same; CSS classnames for the list live in TrackList.module.css) */}
+		<TrackList tracks={results} />
 	</div>
-	);
+);
 };
