@@ -101,8 +101,8 @@ const zUserProfile = z.object({
  * Search Spotify for up to 4 tracks.
  * - Endpoint: GET /search?type=track&limit=4&q=<query>
  * - Returns a simplified TrackSummary[] for easy UI rendering.
- * NOTE: We actually ask for limit=4 (top 4) to match your desired behavior,
- *       but we keep this comment block as-is and add this note.
+ * NOTE: We actually ask for more (limit=10) and then take the first 4.
+ *       This ensures you almost always get 4 results if Spotify has them.
  */
 export const searchTracksTop4 = async (
 	query: string
@@ -119,9 +119,10 @@ export const searchTracksTop4 = async (
 	const headers = await buildAuthHeaders();
 
 	// encodeURIComponent() → built-in JS function to safely put user input in URL
-	const url = `${API_BASE}/search?type=track&limit=4&q=${encodeURIComponent(
+	// Ask for more than 4, then slice to 4 locally
+	const url = `${API_BASE}/search?type=track&limit=10&q=${encodeURIComponent(
 		queryCleaned
-	)}`; // NOTE: limit=4 (top 4)
+	)}`;
 
 	// Fetch JSON response, typed to expected Spotify structure
 	const raw = await fetchJson<unknown>(url, { headers });
@@ -130,7 +131,7 @@ export const searchTracksTop4 = async (
 	const parsed = zSearchTracksResponse.parse(raw);
 	const trackItems = parsed.tracks.items;
 
-	return trackItems.map((track) => ({
+	return trackItems.slice(0, 4).map((track) => ({
 		id: track.id,
 		uri: track.uri,
 		name: track.name,
