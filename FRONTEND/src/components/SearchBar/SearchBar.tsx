@@ -79,12 +79,16 @@ export const SearchBar = () => {
 				className={styles.input}
 			/>
 
-			{/* Loading or error messages */}
-			{loading && <div className={styles.status}>Searching...</div>}
-			{error && <div className={styles.error}>{error}</div>}
+			{/* Reserve a fixed slot for status/error so layout doesn't jump */}
+			<div className={styles.statusSlot}>
+				{loading && <div className={styles.status}>Searching...</div>}
+				{error && <div className={styles.error}>{error}</div>}
+			</div>
 
 			{/* Results list */}
+			{/* Extracted into a presentational component to keep SearchBar focused on behavior */}
+			{/* (UI remains the same; CSS classnames for the list live in TrackList.module.css) */}
 			<TrackList tracks={results} />
-		</div>
+	</div>
 	);
 };

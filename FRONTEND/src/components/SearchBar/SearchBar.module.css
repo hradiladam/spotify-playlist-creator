@@ -2,21 +2,32 @@
 
 .container {
 	width: 100%;
-	max-width: 640px;
+	max-width: 600px;
 	display: grid;
 	gap: 0.5rem;
 }
 
 .input {
-	padding: 0.6rem 0.75rem;
+	padding: 1rem 1rem;
 	border: 1px solid #dcdcdc;
 	border-radius: 8px;
 	font-size: 1rem;
 }
 
-.status {
+.statusSlot {
+	/* fixed space so layout never changes */
+	height: 1.25rem;
+	display: flex;
+	align-items: center;
+	overflow: hidden; /* avoid spill if long errors */
+}
+
+.status,
+.error {
+	/* normalize text metrics so height stays identical */
+	margin: 0;
+	line-height: 1.25rem;
 	font-size: 0.95rem;
-	opacity: 0.8;
 }
 
 .error {
@@ -24,8 +35,9 @@
 }
 
 .results {
-	display: grid;
-	gap: 0.4rem;
+	/* existing rules... */
+	max-height: 50vh;   /* optional */
+	overflow-y: auto;   /* optional */
 }
 
 .resultItem {

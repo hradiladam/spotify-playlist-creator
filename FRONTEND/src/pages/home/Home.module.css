@@ -33,8 +33,10 @@
 
 .content {
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	/* align-items: center;  <-- causes vertical centering + jump */
+	align-items: flex-start; /* anchor under the header so the bar doesn't move */
+	margin-top: 0.5rem;      /* keep the bar close beneath the title */
 }
 
 .loginBox {
