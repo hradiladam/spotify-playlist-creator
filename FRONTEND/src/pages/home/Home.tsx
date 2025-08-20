@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
-import { login, getAccessToken } from "@/auth/spotifyAuth";
+import { login, getAccessToken, logout } from "@/auth/spotifyAuth";
 import { getCurrentUser, type UserProfile } from "@/api/spotify";
 import { SearchBar } from "@/components/SearchBar";
 
@@ -44,7 +44,13 @@ export const Home = () => {
 				<h1 className={styles.title}>Spotify Playlist Creator</h1>
 				{/* "Logged-in as ..." shown only when we know who you are */}
 				{isAuthed && userLabel && (
-					<div className={styles.user}>Logged-in as “{userLabel}”</div>
+					<>
+						<div className={styles.user}>Logged-in as: {userLabel}</div>
+						<button className={styles.logoutButton} onClick={logout}>
+							<i className="fas fa-power-off"></i>
+							Log out
+						</button>
+					</>
 				)}
 			</header>
 

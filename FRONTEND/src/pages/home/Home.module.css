@@ -22,14 +22,53 @@
 	font-weight: 700;
 }
 
-.user {
+.userBox {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.25rem;
 	position: fixed;           
 	top: 0.75rem;
 	left: 1rem;
-	font-size: 1.2rem;         
+	z-index: 20;                
+}
+
+
+.user {
+	position: fixed;
+	top: 0.75rem;
+	left: 1rem;
+	font-size: 1.2rem;
 	font-weight: 700;
 	opacity: 0.95;
-	z-index: 20;                
+	z-index: 20;
+	padding: 1rem;
+}
+
+
+.logoutButton {
+	position: fixed;
+	top: 0.75rem;
+	right: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	background: transparent;
+	border: none;
+	color: rgb(247, 247, 247);
+	cursor: pointer;
+	font-size: 0.95rem;
+	font-weight: 600;
+	padding: 1rem;
+	z-index: 20;
+}
+
+.logoutButton:hover {
+	color: #f33;
+}
+
+.logoutButton i {
+	font-size: 2rem; /* size of the icon */
 }
 
 .content {
