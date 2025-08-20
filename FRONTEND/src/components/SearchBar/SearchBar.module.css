@@ -1,0 +1,49 @@
+.container {
+	width: 100%;
+	max-width: 640px;
+	display: grid;
+	gap: 0.5rem;
+}
+
+.input {
+	padding: 0.6rem 0.75rem;
+	border: 1px solid #dcdcdc;
+	border-radius: 8px;
+	font-size: 1rem;
+}
+
+.status {
+	font-size: 0.95rem;
+	opacity: 0.8;
+}
+
+.error {
+	color: #d00;
+}
+
+.results {
+	display: grid;
+	gap: 0.4rem;
+}
+
+.resultItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 0;
+	border-bottom: 1px solid #eee;
+}
+
+.trackName {
+	font-weight: 600;
+}
+
+.artists {
+	font-size: 0.9rem;
+	opacity: 0.75;
+}
+
+.duration {
+	font-size: 0.85rem;
+	opacity: 0.6;
+}

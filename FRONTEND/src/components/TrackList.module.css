@@ -1,0 +1,32 @@
+/* This file is used to style the track list component, ensuring it matches the design of the search results. */
+
+/* Duplicates the result-related rules from SearchBar.module.css so the visual
+   stays identical even after extracting the list into its own component. */
+
+
+.results {
+	display: grid;
+	gap: 0.4rem;
+}
+
+.resultItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 0;
+	border-bottom: 1px solid #eee;
+}
+
+.trackName {
+	font-weight: 600;
+}
+
+.artists {
+	font-size: 0.9rem;
+	opacity: 0.75;
+}
+
+.duration {
+	font-size: 0.85rem;
+	opacity: 0.6;
+}

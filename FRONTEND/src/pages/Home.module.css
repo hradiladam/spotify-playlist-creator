@@ -1,0 +1,58 @@
+.page {
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	padding: 1rem;
+}
+
+.header {
+	position: relative;          
+	display: flex;
+	align-items: center;
+	justify-content: center;    
+	padding: 0.5rem 0;
+	background: transparent;
+}
+
+.title {
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	font-weight: 700;
+}
+
+.user {
+	position: fixed;           
+	top: 0.75rem;
+	left: 1rem;
+	font-size: 1.2rem;         
+	font-weight: 700;
+	opacity: 0.95;
+	z-index: 20;                
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.loginBox {
+	display: grid;
+	gap: 0.75rem;
+	max-width: 560px;
+	text-align: center;
+}
+
+.loginButton {
+	appearance: none;
+	border: none;
+	border-radius: 8px;
+	padding: 0.75rem 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	background: #1db954; /* Spotify green vibe */
+	color: white;
+}
+
+.loginButton:hover {
+	filter: brightness(0.95);
+}
