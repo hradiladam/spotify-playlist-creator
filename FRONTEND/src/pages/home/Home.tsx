@@ -1,42 +1,16 @@
 // FRONTEND/src/pages/home/Home.tsx
-
-import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
-import { login, getAccessToken, logout } from "@/auth/spotifyAuth";
-import { getCurrentUser, type UserProfile } from "@/api/spotify";
+import { login } from "@/auth/spotifyAuth";
 import { SearchBar } from "@/components/SearchBar";
 import { PlaylistComposer } from "@/components/PlaylistComposer";
+import { useAuth } from "@/hooks/useAuth"; // ⟵ add
 
 export const Home = () => {
-	// Track whether we currently have a valid access token.
-	const [isAuthed, setIsAuthed] = useState<boolean>(false);
-
-	// Logged-in user profile → for "Logged-in as ..."
-	const [me, setMe] = useState<UserProfile | null>(null);
-
-	// On mount, check if we already have a valid token and, if so, load the profile.
-	useEffect(() => {
-		(async () => {
-			const token = await getAccessToken();
-			if (!token) {
-				setIsAuthed(false);
-				setMe(null);
-				return;
-			}
-			setIsAuthed(true);
-			try {
-				const profile = await getCurrentUser();
-				setMe(profile);
-			} catch {
-				// If /me fails for any reason, fall back to just being "authed"
-				// without a name (UI will hide the name line automatically).
-			}
-		})();
-	}, []);
+	// ⟵ replace isAuthed/me state & effect with this:
+	const { isAuthed, user, logout } = useAuth();
 
 	// Friendly label for the user (prefer display_name, then email, then id)
-	const userLabel =
-		me?.display_name || me?.email || (me ? me.id : "");
+	const userLabel = user?.display_name || user?.email || (user ? user.id : "");
 
 	return (
 		<div className={styles.page}>
@@ -72,8 +46,8 @@ export const Home = () => {
 						{/* Search bar component for song search */}
 						<SearchBar />
 
-						{/* If me is not null, use its id -> render PLaylistComposer only when we have a real user id */}
-						<PlaylistComposer userId={me?.id ?? ""} />	
+						{/* If user is not null, use its id -> render PlaylistComposer only when we have a real user id */}
+						<PlaylistComposer userId={user?.id ?? ""} />
 					</>
 				)}
 			</main>
