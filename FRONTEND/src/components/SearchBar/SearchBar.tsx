@@ -74,21 +74,18 @@ return (
 		{/* Input box with clear button */}
 		<div className={styles.inputWrapper}>
 			<input
-				type="text"
+				className={styles.input}
+				placeholder="Search tracks..."
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
-				placeholder="Search for songs..."
-				className={styles.input}
 			/>
-			{/* New clear button: shown only when there's text */}
 			{query && (
 				<button
 					type="button"
 					className={styles.clearButton}
 					onClick={() => setQuery("")}
-					aria-label="Clear search"
 				>
-					×
+					<i className="fas fa-times"></i>
 				</button>
 			)}
 		</div>

@@ -11,8 +11,10 @@
 	position: relative;
 	width: 100%;
 }
+
+/* Input field (extra right padding for clear button space) */
 .input {
-	padding: 1rem 2rem 1rem 1rem; /* add right padding for the clear button */
+	padding: 1rem 2rem 1rem 1rem; /* right padding leaves room for clear button */
 	border: 1px solid #f8f8f8;
 	border-radius: 8px;
 	font-size: 1.1rem;
@@ -20,29 +22,35 @@
 	box-sizing: border-box;
 }
 
-/* New clear button (the ×) */
+/* Clear button inside input (same style as PlaylistComposer) */
 .clearButton {
 	position: absolute;
 	right: 0.75rem;
-	top: 0;
-	bottom: 0;
-	width: 1.5rem;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	background: transparent;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1.2rem;   /* square */
+	height: 1.2rem;  /* square */
+	display: grid;   /* grid centers the icon */
+	place-items: center;
+	background: #f37272;
 	border: none;
-	font-size: 1.6rem;
 	cursor: pointer;
-	color: #a7a7a7;
+	padding: 0;
+	border-radius: 4px;
+}
+
+.clearButton i {
+	display: inline-block;
 	line-height: 1;
+	font-size: 0.9rem;
+	vertical-align: middle;
+	color: #e2e0e0;
+	/* optional nudge if FA looks off:
+	   transform: translateY(0.5px); */
 }
 
 .clearButton:hover {
-	color: #fa5c5c;
+	background: #f55d5d;
 }
 
 .statusSlot {
@@ -55,7 +63,6 @@
 
 .status,
 .error {
-	/* normalize text metrics so height stays identical */
 	margin: 0;
 	line-height: 1.25rem;
 	font-size: 0.95rem;
@@ -66,9 +73,8 @@
 }
 
 .results {
-	/* existing rules... */
-	max-height: 50vh;   /* optional */
-	overflow-y: auto;   /* optional */
+	max-height: 50vh;
+	overflow-y: auto;
 }
 
 .resultItem {
