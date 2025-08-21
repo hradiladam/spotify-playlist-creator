@@ -5,6 +5,7 @@ import styles from "./Home.module.css";
 import { login, getAccessToken, logout } from "@/auth/spotifyAuth";
 import { getCurrentUser, type UserProfile } from "@/api/spotify";
 import { SearchBar } from "@/components/SearchBar";
+import { PlaylistComposer } from "@/components/PlaylistComposer";
 
 export const Home = () => {
 	// Track whether we currently have a valid access token.
@@ -67,8 +68,13 @@ export const Home = () => {
 						</button>
 					</div>
 				) : (
-					// After login → center the search bar
-					<SearchBar />
+					<>
+						{/* Search bar component for song search */}
+						<SearchBar />
+
+						{/* If me is not null, use its id -> render PLaylistComposer only when we have a real user id */}
+						<PlaylistComposer userId={me?.id ?? ""} />	
+					</>
 				)}
 			</main>
 		</div>

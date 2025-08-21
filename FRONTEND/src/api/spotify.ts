@@ -140,6 +140,66 @@ export const searchTracksTop4 = async (
 	}));
 };
 
+//---------- Feature: create & delete playlist ----------
+
+/**
+ * createPlaylist(userId, name)
+ * - POST /users/{user_id}/playlists (spotify for developers documentation)
+ * - Returns minimal info (id, name)
+ *
+ * deletePlaylist(playlistId)
+ * - DELETE /playlists/{playlist_id}/followers (spotify for developers documentation)
+ * - Removes the playlist from the user's account (Spotify's "delete")
+ */
+
+export type NewPlaylist= { id: string; name:string};
+
+export const createPlaylist = async (userId: string, name: string): Promise<NewPlaylist> => {
+	// Get headers with access token so Spotify knows who we are
+	const headers = await buildAuthHeaders();
+
+	// Tell Spotify "create a new playlist for this user"
+	const response = await fetch(`${API_BASE}/users/${encodeURIComponent(userId)}/playlists`, {
+		method: "POST",		// POST = create something new
+		headers: {
+			...headers,		// include the auth header (Authorization: Bearer <token>) from buildAuthHeaders()
+			"Content-Type": "application/json",	// we send JSON data
+		},
+		body: JSON.stringify({
+			name,
+			public: false
+		})
+	});
+
+	// If Spotify says it failed, throw an error so UI can show a message
+	if (!response.ok) {
+		throw new Error(`Failed to create playlist: ${response.statusText}`);
+	}
+
+	// If it worked, Spotify sends back the full playlist object
+	const data = await response.json();
+
+	// We only care about id and name
+	return { id: data.id, name: data.name as string };
+};
+
+export const deletePlaylist = async (playlistId: string): Promise<void> => {
+	// Get headers with access token again
+	const headers = await buildAuthHeaders();
+
+	// Tell Spotify: "remove this playlist from my account"
+	// Note: Spotify doesn’t let you *really* delete a playlist.
+	// Instead, you "unfollow" it, which removes it from your library.
+	const response = await fetch(`${API_BASE}/playlists/${encodeURIComponent(playlistId)}/followers`, {
+		method: "DELETE",
+		headers,
+	});
+
+	if (!response.ok) {
+		throw new Error(`Failed to delete playlist: ${response.statusText}`);
+	}
+};
+
 /** Get the current user's profile (for "Logged-in as ...") */
 export const getCurrentUser = async (): Promise<UserProfile> => {
 	const headers = await buildAuthHeaders();

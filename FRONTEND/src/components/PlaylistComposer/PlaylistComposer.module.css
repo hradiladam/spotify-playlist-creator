@@ -1,0 +1,135 @@
+/* FRONTEND/src/components/PlaylistComposer/PlaylistComposer.module.css */
+
+/* --- Playlist area anchored in bottom half --- */
+.playlistArea {
+	position: fixed;
+	left: 50%;
+	top: 70%;
+	transform: translate(-50%, -50%);
+	display: grid;
+	place-items: center;
+	gap: 0.75rem;
+	z-index: 10;
+	width: 100%;
+}
+
+/* Primary action button → Spotify green (unique to PlaylistComposer) */
+.primaryButton {
+	appearance: none;
+	border: none;
+	border-radius: 8px;
+	padding: 0.6rem 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	background: #1db954; /* Spotify green */
+	color: white;
+	justify-self: center;
+	width: auto;
+}
+
+.primaryButton:hover {
+	filter: brightness(0.95);
+}
+
+/* Form wrapper → input + Save button stacked */
+.createBox {
+	display: grid;
+	gap: 0.5rem;
+	justify-items: center;
+	width: 100%;
+}
+
+/* Wrapper to position the × inside the input */
+.inputWrapper {
+	position: relative;
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+/* Input for playlist name (extra right padding for the clear button) */
+.playlistNameInput {
+	width: 100%;
+	padding: 0.6rem 2rem 0.6rem 0.75rem; /* space for the button at right */
+	border: 1px solid #dcdcdc;
+	border-radius: 8px;
+	font-size: 1rem;
+	box-sizing: border-box;
+}
+
+/* Clear button inside the input (right side) */
+.clearButton {
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%); /* vertical centering */
+	width: 1.2rem;                /* square */
+	height: 1.2rem;               /* square */
+	display: grid;                /* exact centering for icon */
+	place-items: center;
+	background: #f37272;
+	border: none;
+	cursor: pointer;
+	padding: 0;                   /* keep it a true square */
+	border-radius: 4px;
+}
+
+/* Font Awesome icon inside the clear button */
+.clearButton i {
+	display: inline-block;
+	line-height: 1;               /* kill extra text baseline space */
+	font-size: 0.9rem;            /* slightly smaller than the square */
+	vertical-align: middle;       /* avoid baseline drift */
+	/* tiny optical nudge if needed:
+	   transform: translateY(0.5px); */
+	color: #e2e0e0;
+}
+
+.clearButton:hover {
+	background: #f55d5d;
+}
+
+/* After playlist is created → show title + name + info + delete button */
+.createdBox {
+	display: grid;
+	gap: 0.4rem;
+	justify-items: center;
+	text-align: center;
+}
+
+/* Label above playlist name */
+.createdTitle {
+	font-weight: 800;
+	font-size: 1.05rem;
+	letter-spacing: 0.02em;
+}
+
+/* Playlist name text */
+.createdName {
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+
+/* Small note under playlist name */
+.createdNote {
+	font-size: 0.95rem;
+	opacity: 0.9;
+}
+
+/* Delete button → red style to contrast green "add" buttons */
+.deleteButton {
+	appearance: none;
+	border: none;
+	border-radius: 8px;
+	padding: 0.6rem 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	background: #d64545;
+	color: white;
+	justify-self: center;
+	width: auto;
+}
+
+.deleteButton:hover {
+	filter: brightness(0.95);
+}
