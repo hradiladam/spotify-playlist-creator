@@ -9,6 +9,15 @@
     "ts-jest": "^29.2.5"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+
+    // install root + frontend deps in one go
+    "setup": "npm install && cd FRONTEND && npm install",
+
+    // run full stack (Netlify proxy + Vite frontend)
+    "dev": "netlify dev",
+
+    // convenience: build frontend for production
+    "build": "npm run build --prefix FRONTEND"
   }
 }
