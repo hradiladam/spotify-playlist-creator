@@ -3,6 +3,12 @@
     "@netlify/functions": "^4.2.2"
   },
   "devDependencies": {
-    "netlify-cli": "^23.1.4"
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "netlify-cli": "^23.1.4",
+    "ts-jest": "^29.2.5"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
