@@ -1,7 +1,4 @@
-/* FRONTEND/src/components/TrackList/TrackList.module.css */
-
 /* This file is used to style the track list component, ensuring it matches the design of the search results. */
-
 
 .results {
 	display: grid;
@@ -31,7 +28,31 @@
 	opacity: 0.75;
 }
 
+/* Right-side container for duration + save button */
+.actions {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
 .duration {
 	font-size: 0.85rem;
 	opacity: 0.6;
+	min-width: 3.5rem; /* keep width stable */
+	text-align: right;
+}
+
+/* Small neutral action for saving locally */
+.saveBtn {
+	border: 1px solid #b4dac0;
+	background: transparent;
+	color: inherit;
+	border-radius: 6px;
+	padding: 0.25rem 0.5rem;
+	font-size: 0.85rem;
+	cursor: pointer;
+}
+
+.saveBtn:hover {
+	filter: brightness(1.1);
 }

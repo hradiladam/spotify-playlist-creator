@@ -1,5 +1,7 @@
 // FRONTEND/src/pages/Callback.tsx
 
+// This component handles the Spotify authentication callback and displays any errors that occur during login.
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleCallback } from '@/auth/spotifyAuth';
@@ -27,6 +29,4 @@ export const Callback = () => {
 		</div>
 	);
 }
-
-// This component handles the Spotify authentication callback and displays any errors that occur during login.
 

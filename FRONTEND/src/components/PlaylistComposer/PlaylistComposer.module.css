@@ -1,5 +1,3 @@
-/* FRONTEND/src/components/PlaylistComposer/PlaylistComposer.module.css */
-
 /* --- Playlist area anchored in bottom half --- */
 .playlistArea {
 	position: fixed;
@@ -80,8 +78,6 @@
 	line-height: 1;               /* kill extra text baseline space */
 	font-size: 0.9rem;            /* slightly smaller than the square */
 	vertical-align: middle;       /* avoid baseline drift */
-	/* tiny optical nudge if needed:
-	   transform: translateY(0.5px); */
 	color: #e2e0e0;
 }
 
@@ -89,10 +85,10 @@
 	background: #f55d5d;
 }
 
-/* After playlist is created → show title + name + info + delete button */
+/* After playlist is created → show title + name + info + buttons */
 .createdBox {
 	display: grid;
-	gap: 0.4rem;
+	gap: 0.6rem;
 	justify-items: center;
 	text-align: center;
 }
@@ -114,6 +110,29 @@
 .createdNote {
 	font-size: 0.95rem;
 	opacity: 0.9;
+}
+
+/* Row with "Save to Spotify" and "Delete playlist" next to each other */
+.actionsRow {
+	display: flex;
+	gap: 0.5rem;
+}
+
+/* Secondary button (neutral) */
+.secondaryButton {
+	appearance: none;
+	border: 1px solid #dcdcdc;
+	border-radius: 8px;
+	padding: 0.6rem 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	background: transparent;
+	color: inherit;
+	justify-self: center;
+}
+
+.secondaryButton:hover {
+	filter: brightness(1.1);
 }
 
 /* Delete button → red style to contrast green "add" buttons */

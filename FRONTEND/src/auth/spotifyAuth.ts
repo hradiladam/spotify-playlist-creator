@@ -182,6 +182,7 @@ export const handleCallback = async (url: string): Promise<boolean> => {
 	if (tokenResponse.refresh_token) {
 		sessionStorage.setItem(KEYS.refreshToken, tokenResponse.refresh_token);
 	}
+	
 	sessionStorage.setItem(
 		KEYS.expiresAt,
 		String(now + tokenResponse.expires_in - 30) // subtract buffer
@@ -222,6 +223,7 @@ export const getAccessToken = async (): Promise<string | null> => {
 	if (tokenResponse.refresh_token) {
 		sessionStorage.setItem(KEYS.refreshToken, tokenResponse.refresh_token);
 	}
+
 	sessionStorage.setItem(
 		KEYS.expiresAt,
 		String(newNow + tokenResponse.expires_in - 30)

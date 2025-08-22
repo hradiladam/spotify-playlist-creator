@@ -207,3 +207,25 @@ export const getCurrentUser = async (): Promise<UserProfile> => {
 	const parsed = zUserProfile.parse(raw);
 	return parsed;
 };
+
+// ---------- Feature: add tracks to a playlist ----------
+//
+// POST /playlists/{playlist_id}/tracks
+// Accepts array of track URIs and appends them to the playlist.
+
+export const addTracksToPlaylist = async (playlistId: string, uris: string[]): Promise<void> => {
+	if (!uris.length) return;
+	const headers = await buildAuthHeaders();
+	const response = await fetch(`${API_BASE}/playlists/${encodeURIComponent(playlistId)}/tracks`, {
+		method: "POST",
+		headers: {
+			...headers,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ uris }),
+	});
+	if (!response.ok) {
+		const txt = await response.text().catch(() => "");
+		throw new Error(`Failed to add tracks: ${response.statusText} — ${txt}`);
+	}
+};

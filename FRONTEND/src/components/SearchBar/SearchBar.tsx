@@ -2,10 +2,10 @@
 // Uses searchTracksTop4() from our Spotify API client.
 // NOTE: We now return TOP 4 results (kept function name for compatibility).
 
-import styles from './SearchBar.module.css';	// Import CSS module
-import { TrackList } from '@/components/TrackList'; // ⟵ use barrel directly
-import { useSpotifySearch } from '@/hooks/useSpotifySearch'; // ⟵ extracted logic hook
-
+import styles from "./SearchBar.module.css";	// Import CSS module
+import { useSpotifySearch } from "@/hooks/useSpotifySearch";
+import { TrackList } from "@/components/TrackList"; // ⟵ use barrel directly
+import type { TrackSummary } from "@/api/spotify";
 
 // ---------- Main Component ----------
 
@@ -16,9 +16,12 @@ import { useSpotifySearch } from '@/hooks/useSpotifySearch'; // ⟵ extracted lo
  * - Displays top 4 track results (song + artists).
  * NOTE: We actually show top 4.
  */
-export const SearchBar = () => {
+export const SearchBar = ({
+	onSaveTrack,
+}: {
+	onSaveTrack?: (track: TrackSummary) => void;
+}) => {
 	// ---------------- State ----------------
-	// (moved: input state, debounce, async search, cancellation, errors)
 	const { query, setQuery, results, loading, error, clear } = useSpotifySearch("", 400);
 
 	// ---------------- Render ----------------
@@ -37,6 +40,7 @@ export const SearchBar = () => {
 						type="button"
 						className={styles.clearButton}
 						onClick={clear}
+						aria-label="Clear search"
 					>
 						<i className="fas fa-times"></i>
 					</button>
@@ -52,7 +56,7 @@ export const SearchBar = () => {
 			{/* Results list */}
 			{/* Extracted into a presentational component to keep SearchBar focused on behavior */}
 			{/* (UI remains the same; CSS classnames for the list live in TrackList.module.css) */}
-			<TrackList tracks={results} />
+			<TrackList tracks={results} onSaveTrack={onSaveTrack} />
 		</div>
 	);
 };
