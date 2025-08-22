@@ -79,7 +79,7 @@ export const PlaylistComposer = ({
 							}}
 							aria-label="Clear playlist name"
 						>
-							<i className="fas fa-times"></i>
+							<i className="fas fa-times fa-fw"></i>
 						</button>
 					</div>
 
@@ -103,7 +103,7 @@ export const PlaylistComposer = ({
 
 					<div className={styles.actionsRow}>
 						<button
-							className={styles.secondaryButton}
+							className={styles.primaryButton}
 							onClick={() => onSaveToSpotify?.()}
 						>
 							Save to Spotify

@@ -1,10 +1,11 @@
 /* FRONTEND/src/pages/home/Home.module.css */
 
 .page {
-	min-height: 100vh;
+	height: 100%;               /* fill #root, which fills body */
+	overflow: hidden;           /* belt-and-suspenders */
 	display: grid;
 	grid-template-rows: auto 1fr;
-	padding: 1rem;
+	padding: 1rem;              /* safe now that #root has no padding */
 }
 
 .header {
@@ -12,13 +13,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;    
-	padding: 0.5rem 0;
+	padding: 2rem 0;
 	background: transparent;
-	margin-top: 3rem;      /* keep the bar close beneath the title */
+	margin-top: 5rem;      /* keep the bar close beneath the title */
 }
 
 .title {
-	font-size: clamp(1.5rem, 3vw, 2rem);
+	font-size: clamp(2.25rem, 3vw, 2rem);
 	font-weight: 700;
 }
 
@@ -45,13 +46,18 @@
 	padding: 1rem;
 }
 
+.loginButton,
+.logoutButton {
+	display: inline-flex;       /* center contents properly */
+	align-items: center;
+	justify-content: center;
+	line-height: 1;             /* avoid baseline bias */
+}
 
 .logoutButton {
 	position: fixed;
 	top: 0.75rem;
 	right: 1rem;
-	display: flex;
-	align-items: center;
 	gap: 0.4rem;
 	background: transparent;
 	border: none;
@@ -64,7 +70,7 @@
 }
 
 .logoutButton:hover {
-	color: #f33;
+	color: rgb(221, 65, 65);
 }
 
 .logoutButton i {
@@ -74,10 +80,11 @@
 .content {
 	display: flex;
 	justify-content: center;
-	/* align-items: center;  <-- causes vertical centering + jump */
-	align-items: flex-start; /* anchor under the header so the bar doesn't move */
-	margin-top: 1rem;      /* keep the bar close beneath the title */
+	align-items: flex-start;
+	margin-top: 1rem;
+	overflow: hidden;  
 }
+
 
 .loginBox {
 	display: grid;
@@ -96,6 +103,7 @@
 	background: #1db954; /* Spotify green vibe */
 	color: white;
 }
+
 
 .loginButton:hover {
 	filter: brightness(0.95);

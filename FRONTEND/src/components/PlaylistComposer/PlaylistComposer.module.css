@@ -11,28 +11,36 @@
 	width: 100%;
 }
 
+.primaryButton,
+.secondaryButton,
+.deleteButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
 /* Primary action button → Spotify green (unique to PlaylistComposer) */
 .primaryButton {
 	appearance: none;
 	border: none;
 	border-radius: 8px;
-	padding: 0.6rem 1rem;
+	padding: 0.8rem 1rem;
 	font-weight: 700;
 	cursor: pointer;
 	background: #1db954; /* Spotify green */
 	color: white;
-	justify-self: center;
 	width: auto;
 }
 
 .primaryButton:hover {
-	filter: brightness(0.95);
+background: #09a33f; /* Spotify green */
 }
 
 /* Form wrapper → input + Save button stacked */
 .createBox {
 	display: grid;
-	gap: 0.5rem;
+	gap: 1.25rem;
 	justify-items: center;
 	width: 100%;
 }
@@ -48,37 +56,43 @@
 /* Input for playlist name (extra right padding for the clear button) */
 .playlistNameInput {
 	width: 100%;
-	padding: 0.6rem 2rem 0.6rem 0.75rem; /* space for the button at right */
+	padding: 0.6rem 2rem 0.6rem 0.75rem;
 	border: 1px solid #dcdcdc;
 	border-radius: 8px;
 	font-size: 1rem;
 	box-sizing: border-box;
 }
 
-/* Clear button inside the input (right side) */
+/* Change placeholder color for playlist input */
+.playlistNameInput::placeholder {
+	color: #9b9a9a; 
+	opacity: 1; 
+}
+
 .clearButton {
 	position: absolute;
 	right: 0.6rem;
 	top: 50%;
-	transform: translateY(-50%); /* vertical centering */
-	width: 1.2rem;                /* square */
-	height: 1.2rem;               /* square */
-	display: grid;                /* exact centering for icon */
-	place-items: center;
+	transform: translateY(-50%);
+	width: 1.2rem;
+	height: 1.2rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	background: #f37272;
 	border: none;
 	cursor: pointer;
-	padding: 0;                   /* keep it a true square */
+	padding: 0;
 	border-radius: 4px;
 }
 
 /* Font Awesome icon inside the clear button */
 .clearButton i {
-	display: inline-block;
-	line-height: 1;               /* kill extra text baseline space */
-	font-size: 0.9rem;            /* slightly smaller than the square */
-	vertical-align: middle;       /* avoid baseline drift */
+	font-size: 0.9rem;
+	line-height: 1;
 	color: #e2e0e0;
+	margin-top: 0.5px;
+	margin-right: 0.5px;
 }
 
 .clearButton:hover {
@@ -118,23 +132,6 @@
 	gap: 0.5rem;
 }
 
-/* Secondary button (neutral) */
-.secondaryButton {
-	appearance: none;
-	border: 1px solid #dcdcdc;
-	border-radius: 8px;
-	padding: 0.6rem 1rem;
-	font-weight: 700;
-	cursor: pointer;
-	background: transparent;
-	color: inherit;
-	justify-self: center;
-}
-
-.secondaryButton:hover {
-	filter: brightness(1.1);
-}
-
 /* Delete button → red style to contrast green "add" buttons */
 .deleteButton {
 	appearance: none;
@@ -145,10 +142,9 @@
 	cursor: pointer;
 	background: #d64545;
 	color: white;
-	justify-self: center;
 	width: auto;
 }
 
 .deleteButton:hover {
-	filter: brightness(0.95);
+	background: #be3232;
 }

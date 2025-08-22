@@ -1,18 +1,35 @@
+/* FRONTEND/src/components/TrackList/TrackList.module.css */
 /* This file is used to style the track list component, ensuring it matches the design of the search results. */
 
 .results {
 	display: grid;
 	gap: 0.4rem;
+	border: 1px solid rgba(180, 218, 192, 0.28); /* soft outline */
+	border-radius: 8px;
+	padding: 0.5rem 0.75rem;
+	background: rgba(255, 255, 255, 0.02);       /* faint panel feel */
 }
 
 .resultItem {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0.5rem 0;
-	border-bottom: 1px solid #b4dac0;
+	padding: 0.5rem 0.5rem;
+	border-bottom: 1px solid #ecf7ef49;
 	cursor: pointer;            /* makes it feel interactive */
 	transition: background-color 0.2s ease;
+}
+
+/* Remove border on the last item */
+.resultItem:last-child {
+	border-bottom: none;
+}
+
+/* When the results container has no children → remove outline + bg */
+.results:empty {
+	border: none;
+	padding: 0;
+	background: none;
 }
 
 .resultItem:hover {
@@ -29,30 +46,44 @@
 }
 
 /* Right-side container for duration + save button */
+/* Right-side container for duration + save button */
 .actions {
 	display: flex;
 	gap: 0.5rem;
 	align-items: center;
 }
 
+/* Lock the duration width so it never reflows */
 .duration {
 	font-size: 0.85rem;
 	opacity: 0.6;
-	min-width: 3.5rem; /* keep width stable */
+	width: 3.5rem;
 	text-align: right;
+	flex: 0 0 auto;
 }
 
-/* Small neutral action for saving locally */
+/* Make the button’s box stable too */
 .saveBtn {
-	border: 1px solid #b4dac0;
-	background: transparent;
-	color: inherit;
+	background: #1db954;
+	color: #fff;
+	border: 1px solid transparent;  /* constant border so size doesn't change */
 	border-radius: 6px;
-	padding: 0.25rem 0.5rem;
+	padding: 0.25rem 0.6rem;
 	font-size: 0.85rem;
-	cursor: pointer;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 5px;
+	box-sizing: border-box;
+	width: 2.5rem; 
+	flex: 0 0 auto;   
 }
 
 .saveBtn:hover {
-	filter: brightness(1.1);
+	filter: brightness(0.8);   /* visual only */
+	border-color: transparent;  /* keep border width constant */
+	outline: none;
+	box-shadow: none;
+	/* DO NOT change font-weight on hover, it triggers reflow */
 }

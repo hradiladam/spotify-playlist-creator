@@ -22,16 +22,22 @@
 	box-sizing: border-box;
 }
 
-/* Clear button inside input (same style as PlaylistComposer) */
+/* Change placeholder color for playlist input */
+input::placeholder {
+	color: #9b9a9a; 
+	opacity: 1; 
+}
+
 .clearButton {
 	position: absolute;
-	right: 0.75rem;
+	right: 1rem;
 	top: 50%;
 	transform: translateY(-50%);
-	width: 1.2rem;   /* square */
-	height: 1.2rem;  /* square */
-	display: grid;   /* grid centers the icon */
-	place-items: center;
+	width: 1.2rem;
+	height: 1.2rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	background: #f37272;
 	border: none;
 	cursor: pointer;
@@ -39,14 +45,13 @@
 	border-radius: 4px;
 }
 
+/* Font Awesome icon inside the clear button */
 .clearButton i {
-	display: inline-block;
-	line-height: 1;
 	font-size: 0.9rem;
-	vertical-align: middle;
+	line-height: 1;
 	color: #e2e0e0;
-	/* optional nudge if FA looks off:
-	   transform: translateY(0.5px); */
+	margin-top: 0.5px;
+	margin-right: 0.5px;
 }
 
 .clearButton:hover {

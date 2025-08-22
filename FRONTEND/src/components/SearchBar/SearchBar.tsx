@@ -42,7 +42,7 @@ export const SearchBar = ({
 						onClick={clear}
 						aria-label="Clear search"
 					>
-						<i className="fas fa-times"></i>
+						<i className="fas fa-times fa-fw"></i>
 					</button>
 				)}
 			</div>
