@@ -1,0 +1,14 @@
+// tsconfig.jest.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",             // force ESM output
+    "moduleResolution": "node",     // standard Node resolution
+    "verbatimModuleSyntax": false,  // allow ts-jest to transpile clean imports
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["TESTS", "src"]
+}
+

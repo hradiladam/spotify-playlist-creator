@@ -1,4 +1,4 @@
-// TESTS/setup/jest.setup.ts
+// TESTS/setup/jest.setup.cjs
 
 /**
  * Global test environment setup for Jest + React Testing Library.
@@ -11,5 +11,5 @@
  *   This ensures components using fetch don’t fail under JSDOM.
  */
 
-import "@testing-library/jest-dom";
-import "whatwg-fetch";
+require("@testing-library/jest-dom");
+require("whatwg-fetch");
