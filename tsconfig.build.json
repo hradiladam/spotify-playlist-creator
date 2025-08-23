@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src", "netlify/functions", "vite.config.ts", "eslint.config.ts"],
+  "exclude": ["TESTS", "**/*.test.ts", "**/__mocks__/**"]
+}

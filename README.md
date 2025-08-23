@@ -21,17 +21,10 @@ A Vite + React app that lets a user log into Spotify (OAuth 2.0 + PKCE), search 
 
 ## Project Structure
 ```
-
 index.html
-FRONTEND/
-    src/
-        App.tsx
-        index.css
-        main.tsx
-    api/
-        spotify.ts
-    auth/
-        spotifyAuth.ts
+src/
+    api/spotify.ts
+    auth/spotifyAuth.ts
     components/
         PlaylistComposer/
         SearchBar/
@@ -44,14 +37,10 @@ FRONTEND/
     pages/
         Callback.tsx
         home/
-    utils/
-        format.ts
-netlify/
-    functions
-        spotify-token.ts
-TESTS/
-    ...
-
+    utils/format.ts
+    App.tsx
+    main.tsx
+netlify/functions/spotify-token.ts
 ```
 
 ## How It Works (PKCE Flow)
@@ -95,17 +84,16 @@ This app uses the **Spotify Web API**. Spotify applies restrictions depending on
 1. **Clone the repo**
 ```bash
    git clone https://github.com/<your-username>/spotify-playlist-creator.git
-   cd spotify-playlist-creator/FRONTEND
+   cd spotify-playlist-creator
 ```
 
 2. **Install dependencies**
 
 ```bash
-npm run setup
+npm install
 ```
 
-This runs npm install in the root (backend + functions)
-and also runs npm install inside FRONTEND/ (React + Vite).
+This runs npm install in the root.
 Do this once after cloning to install all dependencies.
 
 
@@ -124,14 +112,17 @@ SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
 4. Start the app
 
 ```bash
-npm run dev 
+npm run dev:netlify 
 ```
 Once the dev server is running, open the app at: http://127.0.0.1:8888
 
 ## Scripts
-- `npm run setup` — installs all dependencies (root + frontend)
-- `npm run dev` — start Vite dev server + Netlify functions
-- `npm test` — run tests (once added)
+- `npm install` — installs all dependencies
+- `npm run dev` — start Vite dev server (http://127.0.0.1:5173)
+- `npm run dev:netlify` — run app with Netlify proxy for Spotify callback at http://127.0.0.1:8888
+- `npm run build` — type-check (excluding tests) and create a production build in `dist/`
+- `npm run preview` — locally preview the production build
+- `npm test` — run Jest unit/integration (once added)
 
 ## API Calls Used
 - `GET /v1/search?type=track` — search for tracks (top 10, sliced to 4)
