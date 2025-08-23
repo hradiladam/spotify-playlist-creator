@@ -1,15 +1,15 @@
 [build]
-  base    = "FRONTEND"
+  # project root is now the app root
   command = "npm run build"
   publish = "dist"
 
 [functions]
-  # Relative to the base dir above → go up to repo root
-  directory = "../netlify/functions"
+  # functions live at repo root/netlify/functions
+  directory = "netlify/functions"
 
 [dev]
-  # Run Vite from FRONTEND when using `netlify dev`
-  command    = "npm run dev --prefix FRONTEND"
+  # run Vite from root; Netlify will proxy it
+  command    = "npm run dev"
   targetPort = 5173
   port       = 8888
 

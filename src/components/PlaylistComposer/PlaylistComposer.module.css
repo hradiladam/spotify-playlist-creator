@@ -1,0 +1,152 @@
+/* src/components/PlaylistComposer/PlaylistComposer.module.css */
+
+/* --- Playlist area anchored in bottom half --- */
+.playlistArea {
+	position: fixed;
+	left: 50%;
+	top: 70%;
+	transform: translate(-50%, -50%);
+	display: grid;
+	place-items: center;
+	gap: 0.75rem;
+	z-index: 10;
+	width: 100%;
+}
+
+.primaryButton,
+.secondaryButton,
+.deleteButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+/* Primary action button → Spotify green (unique to PlaylistComposer) */
+.primaryButton {
+	appearance: none;
+	border: none;
+	border-radius: 8px;
+	padding: 0.8rem 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	background: #1db954; /* Spotify green */
+	color: white;
+	width: auto;
+}
+
+.primaryButton:hover {
+background: #09a33f; /* Spotify green */
+}
+
+/* Form wrapper → input + Save button stacked */
+.createBox {
+	display: grid;
+	gap: 1.25rem;
+	justify-items: center;
+	width: 100%;
+}
+
+/* Wrapper to position the × inside the input */
+.inputWrapper {
+	position: relative;
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+/* Input for playlist name (extra right padding for the clear button) */
+.playlistNameInput {
+	width: 100%;
+	padding: 0.6rem 2rem 0.6rem 0.75rem;
+	border: 1px solid #dcdcdc;
+	border-radius: 8px;
+	font-size: 1rem;
+	box-sizing: border-box;
+}
+
+/* Change placeholder color for playlist input */
+.playlistNameInput::placeholder {
+	color: #9b9a9a; 
+	opacity: 1; 
+}
+
+.clearButton {
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1.2rem;
+	height: 1.2rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #f37272;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	border-radius: 4px;
+}
+
+/* Font Awesome icon inside the clear button */
+.clearButton i {
+	font-size: 0.9rem;
+	line-height: 1;
+	color: #e2e0e0;
+	margin-top: 0.5px;
+	margin-right: 0.5px;
+}
+
+.clearButton:hover {
+	background: #f55d5d;
+}
+
+/* After playlist is created → show title + name + info + buttons */
+.createdBox {
+	display: grid;
+	gap: 0.6rem;
+	justify-items: center;
+	text-align: center;
+}
+
+/* Label above playlist name */
+.createdTitle {
+	font-weight: 800;
+	font-size: 1.05rem;
+	letter-spacing: 0.02em;
+}
+
+/* Playlist name text */
+.createdName {
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+
+/* Small note under playlist name */
+.createdNote {
+	font-size: 0.95rem;
+	opacity: 0.9;
+}
+
+/* Row with "Save to Spotify" and "Delete playlist" next to each other */
+.actionsRow {
+	display: flex;
+	gap: 0.5rem;
+}
+
+/* Delete button → red style to contrast green "add" buttons */
+.deleteButton {
+	appearance: none;
+	border: none;
+	border-radius: 8px;
+	padding: 0.6rem 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	background: #d64545;
+	color: white;
+	width: auto;
+}
+
+.deleteButton:hover {
+	background: #be3232;
+}

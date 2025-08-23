@@ -1,0 +1,110 @@
+/* src/pages/home/Home.module.css */
+
+.page {
+	height: 100%;               /* fill #root, which fills body */
+	overflow: hidden;           /* belt-and-suspenders */
+	display: grid;
+	grid-template-rows: auto 1fr;
+	padding: 1rem;              /* safe now that #root has no padding */
+}
+
+.header {
+	position: relative;          
+	display: flex;
+	align-items: center;
+	justify-content: center;    
+	padding: 2rem 0;
+	background: transparent;
+	margin-top: 5rem;      /* keep the bar close beneath the title */
+}
+
+.title {
+	font-size: clamp(2.25rem, 3vw, 2rem);
+	font-weight: 700;
+}
+
+.userBox {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.25rem;
+	position: fixed;           
+	top: 0.75rem;
+	left: 1rem;
+	z-index: 20;                
+}
+
+
+.user {
+	position: fixed;
+	top: 0.75rem;
+	left: 1rem;
+	font-size: 1.2rem;
+	font-weight: 700;
+	opacity: 0.95;
+	z-index: 20;
+	padding: 1rem;
+}
+
+.loginButton,
+.logoutButton {
+	display: inline-flex;       /* center contents properly */
+	align-items: center;
+	justify-content: center;
+	line-height: 1;             /* avoid baseline bias */
+}
+
+.logoutButton {
+	position: fixed;
+	top: 0.75rem;
+	right: 1rem;
+	gap: 0.4rem;
+	background: transparent;
+	border: none;
+	color: rgb(247, 247, 247);
+	cursor: pointer;
+	font-size: 0.95rem;
+	font-weight: 600;
+	padding: 1rem;
+	z-index: 20;
+}
+
+.logoutButton:hover {
+	color: rgb(221, 65, 65);
+}
+
+.logoutButton i {
+	font-size: 2rem; /* size of the icon */
+}
+
+.content {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin-top: 1rem;
+	overflow: hidden;  
+}
+
+
+.loginBox {
+	display: grid;
+	gap: 0.75rem;
+	max-width: 560px;
+	text-align: center;
+}
+
+.loginButton {
+	appearance: none;
+	border: none;
+	border-radius: 8px;
+	padding: 0.75rem 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	background: #1db954; /* Spotify green vibe */
+	color: white;
+}
+
+
+.loginButton:hover {
+	filter: brightness(0.95);
+}
