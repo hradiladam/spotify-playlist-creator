@@ -120,9 +120,8 @@ Once the dev server is running, open the app at: http://127.0.0.1:8888
 - `npm install` — installs all dependencies
 - `npm run dev` — start Vite dev server (http://127.0.0.1:5173)
 - `npm run dev:netlify` — run app with Netlify proxy for Spotify callback at http://127.0.0.1:8888
-- `npm run build` — type-check (excluding tests) and create a production build in `dist/`
-- `npm run preview` — locally preview the production build
 - `npm test` — run Jest unit/integration (once added)
+- ⚠️npm run preview skips Netlify functions, so Spotify auth fails — use `dev:netlify` instead
 
 ## API Calls Used
 - `GET /v1/search?type=track` — search for tracks (top 10, sliced to 4)

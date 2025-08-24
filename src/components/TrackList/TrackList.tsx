@@ -10,7 +10,7 @@ import { msToMinSec } from "@/utils/format";
 
 type Props = {
 	tracks: TrackSummary[];
-	onSaveTrack?: (track: TrackSummary) => void; // ⟵ NEW: allow saving to local playlist
+	onSaveTrack?: (track: TrackSummary) => void; // Allow saving to local playlist
 };
 
 // Presentational component for rendering a list of tracks
