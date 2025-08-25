@@ -5,13 +5,13 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite --host 127.0.0.1",
-    "dev:netlify": "netlify dev",
-    "build": "tsc -p tsconfig.build.json && vite build",
-    "preview": "vite preview",
-    "lint": "eslint .",
-    "typecheck": "tsc -noEmit",
-    "test": "vitest",
-    "test:ci": "vitest run --coverage"
+		"dev:netlify": "netlify dev",
+		"build": "tsc -p tsconfig.build.json && vite build",
+		"preview": "vite preview",
+		"lint": "eslint .",
+		"typecheck": "tsc -noEmit",
+		"test": "vitest",
+		"test:ci": "vitest run --coverage"
 	},
 	"dependencies": {
 		"@netlify/functions": "^4.2.2",
@@ -31,6 +31,7 @@
 		"@types/react": "^19.1.11",
 		"@types/react-dom": "^19.1.7",
 		"@vitejs/plugin-react": "^5.0.0",
+		"@vitest/ui": "^3.2.4",
 		"cross-env": "^7.0.3",
 		"eslint": "^9.33.0",
 		"eslint-plugin-react-hooks": "^5.2.0",
