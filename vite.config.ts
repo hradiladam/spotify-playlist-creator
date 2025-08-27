@@ -13,14 +13,32 @@ export default defineConfig({
 	test: {
 		globals: true,
 		projects: [
-		{
+			{
+				resolve: { alias },
+				test: {
+				name: 'logic-dom',
+				environment: 'jsdom',
+				include: ['TESTS/logic/**/*.test.tsx'],
+				setupFiles: ['./TESTS/setup/setupDom.ts'],
+				},
+			},
+			{
+				resolve: { alias },
+				test: {
+				name: 'logic',
+				environment: 'node',
+				setupFiles: ['./TESTS/setup/setupNode.ts'],
+				include: ['TESTS/logic/**/*.test.ts'],
+				},
+			},
+			{
 			// project-specific vite bits
 			resolve: { alias },
 			test: {
 				name: 'ui',
 				environment: 'jsdom',
 				setupFiles: ['./TESTS/setup/setupDom.ts'],
-				include: ['TESTS/ui/**/*.test.ts?(x)', 'TESTS/component/**/*.test.ts?(x)'],
+				include: ['TESTS/ui/**/*.test.ts?(x)', 'TESTS/component/**/*.test.ts'],
 				},
 			},
 		{
@@ -30,17 +48,7 @@ export default defineConfig({
 				environment: 'node',
 				setupFiles: ['./TESTS/setup/setupApi.ts'],
 				include: ['TESTS/api/**/*.test.ts?(x)'],
-				},
 			},
-		{
-			resolve: { alias },
-			test: {
-				name: 'logic',
-				environment: 'node',
-				setupFiles: ['./TESTS/setup/setupNode.ts'],
-				include: ['TESTS/logic/**/*.test.ts?(x)'],
-				},
-			},
-		],
+		}],
 	},
 });
