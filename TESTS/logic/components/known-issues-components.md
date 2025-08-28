@@ -1,5 +1,5 @@
 
-This is a log of known issues that don't impact core functionality. This is not a lsit of full tests cases with manual to repliccate bugs, its semi0isolated Component tests only
+This is a log of known issues that don't impact core functionality. This is not a lsit of full tests cases with manual to repliccate bugs, its semisolated Component tests only
 
 # 001 SearchBar Component Test Issues - Clear Button Does Not Remove Error
 
