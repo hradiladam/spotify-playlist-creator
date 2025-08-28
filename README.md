@@ -69,25 +69,31 @@ This app uses the **Spotify Web API**. Spotify applies restrictions depending on
 
 ### What this means for you
 - If you are **not whitelisted** in the developer dashboard, the online demo will not let you log in.  
-- Easiest soluton: 
-    1. create a new free Spotify account
-    2. share with me **the email address linked to the Spotify account**
+Easiest soluton: 
+1. create a new free Spotify account
+2. share with me **the email address linked to the Spotify account**
 
-- To try the project yourself:  
-    1. Clone this repo.  
-    2. Create your own Spotify Developer App at [Spotify Dashboard](https://developer.spotify.com/dashboard).  
-    3. create a .env file and add your own **Client ID** and **Redirect URI** to a `.env` file.  
-    4. Run the app locally or deploy to Netlify/Vercel.  
+To try the project YOURSELF - Follow the steps below. Quick summary:  
+1. Clone this repo.  
+2. Create your own Spotify Developer App
+3. LOCAL vs ONLINE: LOCAL - Use local development environemnt. ONLINE - Deploy the app to your own Netlify account
+4. Run the app locally or with your Netlify's online link
 
 
-### Run Locally
+### RUN LOCALLY
+
 1. **Clone the repo**
 ```bash
    git clone https://github.com/<your-username>/spotify-playlist-creator.git
    cd spotify-playlist-creator
 ```
 
-2. **Install dependencies**
+2. Spotify Developer App
+- If you haven't already, create your own Spotify Developer App at [Spotify Dashboard](https://developer.spotify.com/dashboard).
+- Add http://127.0.0.1:8888/callback as Redirect URI in Spotify Developer App
+- Save your own **SPOTIFY_CLIENT_ID** and **SPOTIFY_CLIENT_SECRET** for a `.env` file. 
+
+3. **Install dependencies**
 
 ```bash
 npm install
@@ -97,7 +103,9 @@ This runs npm install in the root.
 Do this once after cloning to install all dependencies.
 
 
-3. **Set up environmental variable**
+4. **Set up environmental variables**
+- “Any vars used in the frontend must have a VITE_ prefix. Backend secrets do not.”
+
 ```
 # --- For frontend (Vite requires VITE_ prefix) --- 
 VITE_REDIRECT_URI=http://127.0.0.1:8888/callback
@@ -109,12 +117,21 @@ SPOTIFY_CLIENT_ID=your_spotify_client_id_here
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
 ```
 
-4. Start the app
+5. Start the app
 
 ```bash
 npm run dev:netlify 
 ```
 Once the dev server is running, open the app at: http://127.0.0.1:8888
+
+
+### RUN ONLINE
+The setup is the same except:
+1. Set Redirect URI in Spotify Development App as: https://YOUR-OWN-APP-NAME.netlify.app/callback
+2. Deploy to you own Netlify account
+3. In your Netlify project settings, add the same environment variables (SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET, plus the VITE_ vars)
+4. Change the Spotify Redirect URI so it includes your netlify app real name (as per step 1)
+
 
 ## Scripts
 - `npm install` — installs all dependencies
@@ -123,12 +140,14 @@ Once the dev server is running, open the app at: http://127.0.0.1:8888
 - `npm test` — run Jest unit/integration (once added)
 - ⚠️npm run preview skips Netlify functions, so Spotify auth fails — use `dev:netlify` instead
 
+
 ## API Calls Used
 - `GET /v1/search?type=track` — search for tracks (top 10, sliced to 4)
 - `GET /v1/me` — get current user profile
 - `POST /v1/users/{user_id}/playlists` — create playlist
 - `POST /v1/playlists/{playlist_id}/tracks` — add tracks
 - `DELETE /v1/playlists/{playlist_id}/followers` — delete (unfollow) playlist
+
 
 ## Roadmap
 
@@ -140,7 +159,7 @@ Once the dev server is running, open the app at: http://127.0.0.1:8888
 - **CI/CD**
   - GitHub Actions CI
 
-- **Rework / New Features**
+- **Future Rework (New Features)**
   - Display all user playlists
   - Add tracks to any playlist
   - Remove tracks from any playlist
