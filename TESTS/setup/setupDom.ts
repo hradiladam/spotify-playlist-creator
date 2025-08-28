@@ -1,25 +1,32 @@
 // TESTS/setup/setupDom.ts
 
-// 1) Fetch polyfill (jsdom/node)
+// Fetch polyfill (jsdom/node)
 import 'whatwg-fetch';
 
-// 2) MSW (node server intercepts fetch in tests)
-//    This is fine for both jsdom + node environments.
+
+// MSW (node server intercepts fetch in tests)
 import { setupServer } from 'msw/node';
+
+// Import the handlers from the handlers file 
 import { handlers } from '../testServer/handlers';
-import { beforeAll, afterEach, afterAll } from 'vitest';
 
+// Import Vitest methods
+import { beforeAll, afterEach, afterAll, expect } from 'vitest';
+
+// Vitest-compatible jest-dom setup
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
+expect.extend(jestDomMatchers); // <- works now
+
+// MSW setup
 const server = setupServer(...handlers);
-
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-// 3) crypto.subtle polyfill only if missing (node/jsdom)
+// crypto polyfill
 import { webcrypto } from 'node:crypto';
 if (!globalThis.crypto || !('subtle' in globalThis.crypto)) {
-	globalThis.crypto = webcrypto as unknown as Crypto;
+  globalThis.crypto = webcrypto as unknown as Crypto;
 }
 
-// Optional: allow tests to override handlers
 export { server };

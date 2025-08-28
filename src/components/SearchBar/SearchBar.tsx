@@ -18,11 +18,7 @@ import type { TrackSummary } from "@/api/spotify";
  * - Displays top 4 track results (song + artists).
  * NOTE: We actually show top 4.
  */
-export const SearchBar = ({
-	onSaveTrack,
-}: {
-	onSaveTrack?: (track: TrackSummary) => void;
-}) => {
+export const SearchBar = ({onSaveTrack}: {onSaveTrack?: (track: TrackSummary) => void}) => {
 	// ---------------- State ----------------
 	const { query, setQuery, results, loading, error, clear } = useSpotifySearch("", 400);
 
