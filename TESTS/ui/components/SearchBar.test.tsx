@@ -1,4 +1,4 @@
-// TESTS/logic/components/SearchBar.realistic.test.tsx
+// TESTS/ui/components/SearchBar.realistic.test.tsx
 // @vitest-environment jsdom
 
 
@@ -220,4 +220,4 @@ describe('<SearchBar /> realistic behavior', () => {
 });
 
 // npm run test
-// npx vitest --project logic-dom run TESTS/logic/components/SearchBar.test.tsx
+// npx vitest --project logic-dom run TESTS/ui/components/SearchBar.test.tsx

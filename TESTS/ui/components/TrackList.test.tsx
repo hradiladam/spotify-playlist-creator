@@ -1,4 +1,4 @@
-// TESTS/logic/components/TrackList.test.tsx
+// TESTS/ui/components/TrackList.test.tsx
 // @vitest-environment jsdom
 
 /**
@@ -86,4 +86,4 @@ describe('<TrackList />', () => {
 
 
 // npm run test
-// npx vitest --project logic-dom run TESTS/logic/components/TrackList.test.tsx
+// npx vitest --project logic-dom run TESTS/ui/components/TrackList.test.tsx
