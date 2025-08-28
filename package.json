@@ -39,7 +39,7 @@
 		"globals": "^16.3.0",
 		"jsdom": "^26.1.0",
 		"msw": "^2.10.5",
-		"netlify-cli": "^23.1.4",
+		"netlify-cli": "17.18.1",
 		"supertest": "^7.1.4",
 		"typescript": "~5.8.3",
 		"typescript-eslint": "^8.39.1",
