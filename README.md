@@ -152,9 +152,8 @@ The setup is the same except:
 ## Roadmap
 
 - **Testing**
-  - Jest unit, component, and integration tests
+  - Vitest unit and integration tests
   - Playwright E2E + UI tests
-  - Postman API scripts for token endpoint
 
 - **CI/CD**
   - GitHub Actions CI
