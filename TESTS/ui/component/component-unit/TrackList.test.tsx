@@ -1,4 +1,4 @@
-// TESTS/ui/components/TrackList.test.tsx
+// TESTS/ui/component/component-unit/TrackList.test.tsx
 // @vitest-environment jsdom
 
 /**
@@ -16,23 +16,23 @@ import { TrackList } from '@/components/TrackList';
 import type { TrackSummary } from '@/api/spotify';
 
 afterEach(() => {
-  cleanup();
+    cleanup();
 });
 
 const makeTracks = (): TrackSummary[] => [
   {
-    id: 't1',
-    uri: 'spotify:track:t1',
-    name: 'First Song',
-    artists: 'Artist A, Artist B',
-    duration_ms: 185000, // 3:05
+      id: 't1',
+      uri: 'spotify:track:t1',
+      name: 'First Song',
+      artists: 'Artist A, Artist B',
+      duration_ms: 185000, // 3:05
   },
   {
-    id: 't2',
-    uri: 'spotify:track:t2',
-    name: 'Second Song',
-    artists: 'Artist C',
-    duration_ms: 240000, // 4:00
+      id: 't2',
+      uri: 'spotify:track:t2',
+      name: 'Second Song',
+      artists: 'Artist C',
+      duration_ms: 240000, // 4:00
   },
 ];
 
@@ -86,4 +86,4 @@ describe('<TrackList />', () => {
 
 
 // npm run test
-// npx vitest --project logic-dom run TESTS/ui/components/TrackList.test.tsx
+// npx vitest --project ui run TESTS/ui/component/component-unit/TrackList.test.tsx

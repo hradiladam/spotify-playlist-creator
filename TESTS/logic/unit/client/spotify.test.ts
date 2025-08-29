@@ -1,4 +1,4 @@
-// TESTS/logic/unit/api/spotify.unit.test.ts
+// TESTS/logic/unit/client/spotify.test.ts
 // @vitest-environment node
 
 // Unit tests for src/api/spotify.ts (pure unit: mock getAccessToken + fetch; no MSW/DOM)
@@ -174,5 +174,5 @@ describe('api/spotify.ts (unit, node)', () => {
 
 
 // npm run test
-// npx vitest run TESTS/logic/unit/api/spotify.unit.test.ts
+// npx vitest run TESTS/logic/unit/client/spotify.test.ts
 

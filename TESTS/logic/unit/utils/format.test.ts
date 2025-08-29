@@ -1,11 +1,11 @@
 // TESTS/logic/unit//utils/format.test.ts
 // @vitest-environment node
 
-import { describe, it, expect } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import { msToMinSec } from '@/utils/format';
 
 describe('msToMinSec', () => {
-	it.each([
+	test.each([
 		[0, '0:00'],
 		[61000, '1:01'],
 		[3599999, '59:59'],
@@ -19,7 +19,6 @@ describe('msToMinSec', () => {
 
 
 // npm run test
-// npx vitest --ui
 // npx vitest run TESTS/logic/unit/utils/format.test.ts
 
 

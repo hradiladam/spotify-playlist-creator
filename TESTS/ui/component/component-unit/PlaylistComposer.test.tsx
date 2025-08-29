@@ -1,4 +1,4 @@
-// TESTS/ui/components/PlaylistComposer.test.tsx
+// TESTS/ui/component/component-unit/PlaylistComposer.test.tsx
 // @vitest-environment jsdom
 
 /**
@@ -20,8 +20,8 @@ import { PlaylistComposer } from '@/components/PlaylistComposer/PlaylistComposer
 
 
 afterEach(() => {
-  cleanup();
-  vi.restoreAllMocks(); // restore alert/confirm spies between tests
+    cleanup();
+    vi.restoreAllMocks(); // restore alert/confirm spies between tests
 });
 
 
@@ -179,4 +179,4 @@ describe('<PlaylistComposer /> realistic behavior', () => {
 
 
 // npm run test
-// npx vitest --project logic-dom run TESTS/ui/components/PlaylistComposer.test.tsx
+// npx vitest --project ui run TESTS/ui/component/component-unit/PlaylistComposer.test.tsx
