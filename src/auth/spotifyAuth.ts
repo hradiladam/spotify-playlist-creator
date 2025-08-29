@@ -10,8 +10,14 @@
 //   "code_verifier" that lives only in the browser session.
 //
 // Flow overview:
-// login() → redirect to Spotify → callback() with code → exchange for tokens
-// → store tokens → getAccessToken() when needed → logout()
+// login() → create code_verifier + challenge → save verifier → redirect to Spotify /authorize
+// callback (/callback) → Spotify returns ?code → handleCallback() posts to Netlify /spotify-token with verifier
+// Netlify fn → adds client_secret → exchanges code for {access, refresh, expires_in} → returns JSON
+// handleCallback() → store access_token, refresh_token, expires_at in sessionStorage
+// getAccessToken() → return token if valid, else refresh via Netlify, else null
+// API calls → use "Authorization: Bearer <access_token>" (search, /me, playlists)
+// logout() → clear sessionStorage keys → redirect home
+
 
 // ---------------------------------------------------------------------------
 // Spotify constants
