@@ -1,7 +1,14 @@
 // src/api/spotify.ts
 // Thin Spotify Web API client
-//  — Step 1: search top 4 tracks
-//  — Step 2: get current user profile
+// - Adds auth headers via getAccessToken()
+// - Provides helpers for fetch + error handling
+// - Validates responses with zod
+// - Exposes simplified functions:
+//   • searchTracksTop4      → search tracks, return top 4 summaries
+//   • createPlaylist        → create playlist for a user
+//   • deletePlaylist        → "unfollow" (delete) playlist
+//   • getCurrentUser        → fetch current user profile
+//   • addTracksToPlaylist   → add tracks by URI
 
 
 import { getAccessToken } from "@/auth/spotifyAuth";
@@ -104,9 +111,7 @@ const zUserProfile = z.object({
  * NOTE: We actually ask for more (limit=10) and then take the first 4.
  *       This ensures you almost always get 4 results if Spotify has them.
  */
-export const searchTracksTop4 = async (
-	query: string
-): Promise<TrackSummary[]> => {
+export const searchTracksTop4 = async (query: string): Promise<TrackSummary[]> => {
 	// Clean up input: trim spaces
 	const queryCleaned = query.trim();
 
@@ -214,7 +219,7 @@ export const getCurrentUser = async (): Promise<UserProfile> => {
 // Accepts array of track URIs and appends them to the playlist.
 
 export const addTracksToPlaylist = async (playlistId: string, uris: string[]): Promise<void> => {
-	if (!uris.length) return;
+	if (!uris.length) return;  // No tracks to add in
 	const headers = await buildAuthHeaders();
 	const response = await fetch(`${API_BASE}/playlists/${encodeURIComponent(playlistId)}/tracks`, {
 		method: "POST",
@@ -224,6 +229,7 @@ export const addTracksToPlaylist = async (playlistId: string, uris: string[]): P
 		},
 		body: JSON.stringify({ uris }),
 	});
+
 	if (!response.ok) {
 		const txt = await response.text().catch(() => "");
 		throw new Error(`Failed to add tracks: ${response.statusText} — ${txt}`);
