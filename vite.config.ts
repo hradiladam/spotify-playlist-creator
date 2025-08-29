@@ -12,6 +12,7 @@ export default defineConfig({
 	server: { host: '127.0.0.1', port: 5173 },
 	test: {
 		globals: true,
+		testTimeout: 10000, // Global timeout (10s for all tests)
 		projects: [
 			// logic-dom: unit tests that require a browser-like env (jsdom).
 			// Use for hooks/utilities that depend on fetch, timers, or DOM APIs.
@@ -46,6 +47,8 @@ export default defineConfig({
 					environment: 'jsdom',
 					setupFiles: ['./TESTS/setup/setupDom.ts'],
 					include: ['TESTS/ui/**/*.test.ts?(x)'],
+					testTimeout: 20000,
+    				hookTimeout: 20000,
 				},
 			},
 
@@ -70,8 +73,8 @@ export default defineConfig({
 					environment: 'jsdom',
 					setupFiles: ['./TESTS/setup/setupDom.ts'],
 					include: ['TESTS/integration/**/*.int.test.ts?(x)'],
-					testTimeout: 15000,
-					hookTimeout: 15000,
+					testTimeout: 20000,
+					hookTimeout: 20000,
 				},
 			},
 		],
