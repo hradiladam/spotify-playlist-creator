@@ -1,4 +1,4 @@
-// TESTS/logic/unit/format.test.ts
+// TESTS/logic/unit//utils/format.test.ts
 // @vitest-environment node
 
 import { describe, it, expect } from 'vitest';
@@ -20,7 +20,7 @@ describe('msToMinSec', () => {
 
 // npm run test
 // npx vitest --ui
-// npx vitest run TESTS/logic/unit/format.test.ts
+// npx vitest run TESTS/logic/unit/utils/format.test.ts
 
 
 
