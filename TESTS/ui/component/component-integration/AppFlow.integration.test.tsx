@@ -1,4 +1,4 @@
-// TESTS/ui/component/component-integration/AppFlow.int.test.tsx
+// TESTS/ui/component/component-integration/AppFlow.integration.test.tsx
 // @vitest-environment jsdom
 
 // Component-integration tests:
@@ -176,4 +176,4 @@ describe('App Flow (component-integration)', () => {
     });
 });
 
-// npx vitest --project ui run TESTS/ui/component/component-integration/AppFlow.int.test.tsx
+// npx vitest --project ui run TESTS/ui/component/component-integration/AppFlow.integration.test.tsx
