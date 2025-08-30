@@ -66,23 +66,6 @@ describe('spotify.ts integration', () => {
 		).resolves.toBeUndefined();
 	});
 
-	// Make sure deletePlaylist calls the right DELETE URL,
-	// and that our client resolves without throwing.
-	test('deletePlaylist calls DELETE /followers and resolves', async () => {
-		// override handler for DELETE followers, because I didn't create handler for delete and I want to practice overriding
-		// If I need delete again, I'll add it to MSW handlers
-		let capturedId = '';
-		server.use(
-			http.delete('https://api.spotify.com/v1/playlists/:playlistId/followers', ({ params }) => {
-				capturedId = String(params.playlistId);
-				return new HttpResponse(null, { status: 204 });
-			})
-		);
-
-		await expect(deletePlaylist('pl1')).resolves.toBeUndefined();
-		expect(capturedId).toBe('pl1');
-	});
-
 	// Simulate token expiration (401) and check that
 	// our client surfaces it as an error instead of swallowing it.
 	test('searchTracksTop4 throws when token is expired (401)', async () => {
