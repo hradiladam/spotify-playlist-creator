@@ -188,6 +188,8 @@ export const createPlaylist = async (userId: string, name: string): Promise<NewP
 	return { id: data.id, name: data.name as string };
 };
 
+
+// This functionality isn't implemented yet! As of now, user can't browse playlists. Deleting the playlist user creates would be contraproductive.
 export const deletePlaylist = async (playlistId: string): Promise<void> => {
 	// Get headers with access token again
 	const headers = await buildAuthHeaders();
@@ -205,6 +207,7 @@ export const deletePlaylist = async (playlistId: string): Promise<void> => {
 	}
 };
 
+
 /** Get the current user's profile (for "Logged-in as ...") */
 export const getCurrentUser = async (): Promise<UserProfile> => {
 	const headers = await buildAuthHeaders();
@@ -217,6 +220,7 @@ export const getCurrentUser = async (): Promise<UserProfile> => {
 //
 // POST /playlists/{playlist_id}/tracks
 // Accepts array of track URIs and appends them to the playlist.
+
 
 export const addTracksToPlaylist = async (playlistId: string, uris: string[]): Promise<void> => {
 	if (!uris.length) return;  // No tracks to add in
