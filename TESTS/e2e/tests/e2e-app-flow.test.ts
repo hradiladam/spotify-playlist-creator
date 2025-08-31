@@ -1,9 +1,9 @@
-// TESTS/e2e/e2e-app-flow.test.ts
+// TESTS/e2e/tests/e2e-app-flow.test.ts
 
 import { test, expect } from '@playwright/test';
-import { seedLoggedInSession } from './helpers/e2e-auth';
-import { stubMe, stubSearchTracks, stubCreatePlaylist, stubAddTracks } from './helpers/stubs';
-import { HomePage } from './pages/HomePage';
+import { seedLoggedInSession } from '../helpers/e2e-auth';
+import { stubMe, stubSearchTracks, stubCreatePlaylist, stubAddTracks } from '../helpers/stubs';
+import { HomePage } from '../pages/HomePage';
 
 
 test('full flow: search → create → add track → save to Spotify', async ({ page }) => {
@@ -37,4 +37,4 @@ test('full flow: search → create → add track → save to Spotify', async ({ 
 });
 
 
-// npx playwright test TESTS/e2e/e2e-app-flow.test.ts --config TESTS/e2e/playwright.config.ts
+// npx playwright test TESTS/e2e/tests/e2e-app-flow.test.ts --config TESTS/e2e/playwright.config.ts

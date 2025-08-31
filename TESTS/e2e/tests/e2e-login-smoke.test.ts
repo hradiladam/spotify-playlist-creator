@@ -1,4 +1,4 @@
-// TESTS/e2e/spec/e2e-smoke.spec.ts
+// TESTS/e2e/tests/e2e-login-smoke.spec.ts
 
 import { seedLoggedInSession } from '../helpers/e2e-auth';
 import { test, expect } from '@playwright/test';
@@ -16,7 +16,7 @@ test('app boots directly into logged-in state', async ({ page }) => {
 });
 
 
-// npx playwright test TESTS/e2e/specs/e2e-smoke.spec --config TESTS/e2e/playwright.config.ts
+// npx playwright test TESTS/e2e/tests/e2e-login-smoke.spec --config TESTS/e2e/playwright.config.ts
 
 
 	
