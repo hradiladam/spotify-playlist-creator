@@ -1,20 +1,39 @@
 [build]
-  # project root is now the app root
   command = "npm run build"
   publish = "dist"
 
 [functions]
-  # functions live at repo root/netlify/functions
   directory = "netlify/functions"
 
 [dev]
-  # run Vite from root; Netlify will proxy it
   command    = "npm run dev"
   targetPort = 5173
   port       = 8888
 
+# --- Let Vite module URLs pass through (works in dev and prod) ---
 [[redirects]]
-  # SPA routing so /callback (and other routes) don’t 404
-  from = "/*"
-  to   = "/index.html"
+  from = "/src/*"
+  to   = "/src/:splat"
   status = 200
+
+[[redirects]]
+  from = "/@vite/*"
+  to   = "/@vite/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/node_modules/*"
+  to   = "/node_modules/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/assets/*"
+  to   = "/assets/:splat"
+  status = 200
+
+# --- SPA fallback only in production ---
+[context.production]
+  [[redirects]]
+    from = "/*"
+    to   = "/index.html"
+    status = 200
