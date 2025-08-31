@@ -1,4 +1,4 @@
-// TESTS/api/api-integration/spotify.api-int.test.ts
+// TESTS/api/spotify-api-integration/spotify-api-int.test.ts
 // @vitest-environment node
 //
 // Integration tests for src/api/spotify.ts (our Spotify Web API client).
@@ -144,4 +144,4 @@ describe('spotify.ts integration', () => {
 
 
 // npm run tests
-// npx vitest --project api run TESTS/api/api-integration/spotify.api-int.test.ts
+// npx vitest --project api run TESTS/api/spotify-api-integration/spotify-api-int.test.ts
