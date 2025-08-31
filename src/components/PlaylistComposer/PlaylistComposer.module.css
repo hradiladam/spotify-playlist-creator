@@ -63,6 +63,8 @@ background: #09a33f; /* Spotify green */
 	border-radius: 8px;
 	font-size: 1rem;
 	box-sizing: border-box;
+	background-color: #2a2a2a;
+	color: #fff;
 }
 
 /* Change placeholder color for playlist input */
