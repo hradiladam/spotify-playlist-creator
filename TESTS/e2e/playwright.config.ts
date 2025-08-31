@@ -2,9 +2,13 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-	testDir: './specs', // folder with e2e specs
+	testDir: '.',
 	use: {
 		baseURL: 'http://127.0.0.1:5173', // must match how app runs locally
+		headless: false,  // show browser window
+		launchOptions: {
+			slowMo: 1000,  // 1000ms pause after each action
+		},
 	},
 
 	projects: [
