@@ -78,18 +78,20 @@ const handler: Handler = async (event) => {
 			body: params.toString(),
 		});
 
-		// Step 7: Parse Spotify’s JSON response.
+		// Step 7: Read Spotify’s raw response body as text.
+		// Spotify always sends JSON (success or error), but we don’t parse it here.
 		// Example success: { access_token, refresh_token, expires_in, token_type, scope }
 		// Example error:   { error: "invalid_grant", error_description: "Code has expired" }
-		const data = await res.json();
+		const text = await res.text();
 
-		// Step 8: Return response back to the frontend.
-		// This allows the frontend to store the tokens in sessionStorage.
+		// Step 8: Return Spotify’s status + body directly back to the frontend.
+		// This allows the frontend to see both success and error cases correctly.
 		return {
-			statusCode: 200,
+			statusCode: res.status,
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(data),
+			body: text,
 		};
+
 	} catch (error) {
 		// If anything went wrong (bad JSON, network error, etc.), log and return 500
 		console.error("Error in Spotify token handler:", error);

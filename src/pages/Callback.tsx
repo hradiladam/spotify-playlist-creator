@@ -2,30 +2,34 @@
 
 // This component handles the Spotify authentication callback and displays any errors that occur during login.
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleCallback } from '@/auth/spotifyAuth';
 
-
 export const Callback = () => {
 	const navigate = useNavigate();
+	const hasRun = useRef(false);
 
 	useEffect(() => {
+		if (hasRun.current) return;      // prevent StrictMode double-run
+		hasRun.current = true;
+
 		(async () => {
 			try {
-				await handleCallback(window.location.href);
-				navigate("/");	// Go back home after successful login
-			} catch (error) {
-				console.error("Error handling callback:", error);
+				const ok = await handleCallback(window.location.href);
+				if (ok) navigate('/');
+
+			} catch (e) {
+				console.error('Error handling callback:', e);
 			}
 		})();
-	}, [navigate]);
+  }, [navigate]);
 
 
 
 	return (
 		<div>
-			Finishing login...
+			Logging in...
 		</div>
 	);
 }
