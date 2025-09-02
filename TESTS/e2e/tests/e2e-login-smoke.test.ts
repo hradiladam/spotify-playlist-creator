@@ -1,6 +1,6 @@
 // TESTS/e2e/tests/e2e-login-smoke.spec.ts
 
-import { seedLoggedInSession } from '../helpers/e2e-auth';
+import { seedLoggedInSession } from '../helpers/e2e-auth-once';
 import { test, expect } from '@playwright/test';
 
 test('app boots directly into logged-in state', async ({ page }) => {

@@ -20,7 +20,7 @@ export class HomePage {
 		this.savePlaylistLocalButton = page.getByRole('button', { name: /save playlist/i });
 		this.deletePlaylistLocalButton = page.getByRole('button', { name: /delete playlist/i });
 		this.savePlaylistToSpotifyButton = page.getByRole('button', { name: /save to spotify/i });
-		this.addTrackToPlaylistButtons = page.getByRole('button', { name: /^save$/i }); // match only the per-track save buttons (not "Save playlist" or "Save to Spotify")
+		this.addTrackToPlaylistButtons = page.getByRole('button', { name: /^save$/i }); // per-track Save buttons only
 		this.savedCounter = page.getByText(/saved songs:/i);
 	}
 
@@ -29,7 +29,7 @@ export class HomePage {
 		await this.page.goto('/');
 	}
 
-	// --- Assertions ---
+	// --- Assertions (state gates only; no expect) ---
 	async assertLoggedInUI() {
 		await this.page.getByText(/logged-in as:/i).waitFor();
 		await this.searchInput.waitFor();
@@ -38,38 +38,34 @@ export class HomePage {
 	// --- Actions ---
 	async search(q: string, debouncedMs = 450) {
 		await this.searchInput.fill(q);
-		await this.page.waitForTimeout(debouncedMs); // wait longer than debounce
+		await this.page.waitForTimeout(debouncedMs); // debounce window
+	}
+
+	async searchAndWait(q: string, debouncedMs = 450) {
+		await this.search(q, debouncedMs);
+		await this.addTrackToPlaylistButtons.first().waitFor(); // results rendered
 	}
 
 	async createPlaylist(name: string) {
-        await this.addNewPlaylistButton.click();
-        await this.page.getByPlaceholder(/type playlist name/i).fill(name);
-        await this.savePlaylistLocalButton.click();
+		await this.addNewPlaylistButton.click();
+		await this.page.getByPlaceholder(/type playlist name/i).fill(name);
+		await this.savePlaylistLocalButton.click();
 
-        // Unique post-conditions for the created state
-        await this.savePlaylistToSpotifyButton.waitFor();
-        await this.deletePlaylistLocalButton.waitFor();
+		// Created-state UI present
+		await this.savePlaylistToSpotifyButton.waitFor();
+		await this.deletePlaylistLocalButton.waitFor();
 
-        // (Optional) also assert the exact created name, but scoped & disambiguated
-        await this.page.getByText(new RegExp(`^${name}$`, 'i')).first().waitFor();
-    }
+		// Ensure exact name is visible
+		await this.page.getByText(new RegExp(`^${name}$`, 'i')).first().waitFor();
+	}
 
 	async deletePlaylist(confirm = true) {
-		// intercept confirm dialog
-		this.page.once('dialog', d => {
-			confirm ? d.accept() : d.dismiss();
-		});
+		this.page.once('dialog', d => (confirm ? d.accept() : d.dismiss()));
 		await this.deletePlaylistLocalButton.click();
 	}
 
 	async addFirstTrackToPlaylist() {
 		await this.addTrackToPlaylistButtons.first().click();
-	}
-
-	async savedCount(): Promise<number> {
-		const text = await this.savedCounter.textContent();
-		const m = text?.match(/\d+/);
-		return m ? parseInt(m[0], 10) : 0;
 	}
 
 	async saveToSpotifyAndGetAlert(): Promise<string> {
@@ -82,5 +78,16 @@ export class HomePage {
 		});
 		await this.savePlaylistToSpotifyButton.click();
 		return msgPromise;
+	}
+
+	// --- State getters (tests assert on these) ---
+	async savedCount(): Promise<number> {
+		const text = await this.savedCounter.textContent();
+		const m = text?.match(/\d+/);
+		return m ? parseInt(m[0], 10) : 0;
+	}
+
+	async logout() {
+		await this.page.getByRole('button', { name: /log out/i }).click();
 	}
 }

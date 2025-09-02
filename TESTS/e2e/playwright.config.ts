@@ -5,7 +5,7 @@ export default defineConfig({
 	testDir: '.',
 	use: {
 		baseURL: 'http://127.0.0.1:5173', // must match how app runs locally
-		headless: false,  // show browser window
+		headless: true,  // show browser window
 		launchOptions: {
 			slowMo: 1000,  // 1000ms pause after each action
 		},
