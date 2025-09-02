@@ -1,4 +1,4 @@
-// TESTS/ui/component/component-unit/PlaylistComposer.test.tsx
+// TESTS/ui/component/component-unit/PlaylistComposer.ui.test.tsx
 // @vitest-environment jsdom
 
 /**
@@ -179,4 +179,4 @@ describe('<PlaylistComposer /> realistic behavior', () => {
 
 
 // npm run test
-// npx vitest --project ui run TESTS/ui/component/component-unit/PlaylistComposer.test.tsx
+// npx vitest --project ui run TESTS/ui/component/component-unit/PlaylistComposer.ui.test.tsx
