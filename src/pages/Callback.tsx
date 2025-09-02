@@ -20,7 +20,7 @@ export const Callback = () => {
 				if (ok) navigate('/');
 
 			} catch (e) {
-				console.error('Error handling callback:', e);
+				alert(`Login failed: ${(e as Error).message}`);
 			}
 		})();
   }, [navigate]);
