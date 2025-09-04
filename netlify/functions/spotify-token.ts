@@ -56,6 +56,7 @@ const handler: Handler = async (event) => {
 			params.set("code", body.code);
 			params.set("redirect_uri", body.redirect_uri);
 			params.set("code_verifier", body.code_verifier);
+			
 		} else {
 			// Refresh flow → use long-lived refresh_token to get a new access_token
 			params.set("refresh_token", body.refresh_token);
