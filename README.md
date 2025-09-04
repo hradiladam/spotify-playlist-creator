@@ -164,12 +164,10 @@ This project has a test setup covering the app from small logic units to full br
   - Vitest unit and integration tests
   - Playwright E2E + UI tests
 
-- **CI/CD**
-  - GitHub Actions CI
-
 
  ## Planned improvement: 
-Add a state value to the Spotify login flow. Right now PKCE login works without it, but Spotify suggests using it for safety.
+1. **CI/CD** - GitHub Actions CI
+2. Add a state value to the Spotify login flow. Right now PKCE login works without it, but Spotify suggests using it for safety.
 
 The idea:
 - When starting login(), create a random state string.
