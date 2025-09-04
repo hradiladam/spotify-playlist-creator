@@ -41,6 +41,8 @@ src/
     App.tsx
     main.tsx
 netlify/functions/spotify-token.ts
+postman-collection
+TESTS/
 ```
 
 ## How It Works (PKCE Flow)
@@ -137,7 +139,7 @@ The setup is the same except:
 - `npm install` — installs all dependencies
 - `npm run dev` — start Vite dev server (http://127.0.0.1:5173)
 - `npm run dev:netlify` — run app with Netlify proxy for Spotify callback at http://127.0.0.1:8888
-- `npm test` — run Jest unit/integration (once added)
+- `npm test` — run Vitest unit/integration (once added)
 - ⚠️npm run preview skips Netlify functions, so Spotify auth fails — use `dev:netlify` instead
 
 
@@ -148,6 +150,13 @@ The setup is the same except:
 - `POST /v1/playlists/{playlist_id}/tracks` — add tracks
 - `DELETE /v1/playlists/{playlist_id}/followers` — delete (unfollow) playlist
 
+## TESTS
+This project has a test setup covering the app from small logic units to full browser flows:
+- **Unit & integration tests** for hooks, utils, API and authorization modules (Vitest).  
+- **React component tests** with jsdom + MSW stubbing the Spotify API.  
+- **End-to-end tests** with Playwright (browser).  
+- **API smoke tests** in Postman (collection included).
+- See [`TESTS/readme-tests.md`](./TESTS/readme-tests.md) for more information.
 
 ## Roadmap
 
@@ -158,7 +167,20 @@ The setup is the same except:
 - **CI/CD**
   - GitHub Actions CI
 
-- **Future Rework (New Features)**
+
+ ## Planned improvement: 
+Add a state value to the Spotify login flow. Right now PKCE login works without it, but Spotify suggests using it for safety.
+
+The idea:
+- When starting login(), create a random state string.
+- Save it in sessionStorage.
+- Add it to the /authorize URL.
+- Later in handleCallback(), check that the state from Spotify matches the one we saved.
+- If it doesn’t match, stop the login.
+- This way we make sure the callback really comes from our own login request and not from some bad redirect.
+
+
+## Future Rework (New Features):
   - Display all user playlists
   - Add tracks to any playlist
   - Remove tracks from any playlist
