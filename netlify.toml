@@ -9,27 +9,7 @@
   command    = "npm run dev"
   targetPort = 5173
   port       = 8888
-
-# --- Let Vite module URLs pass through (works in dev and prod) ---
-[[redirects]]
-  from = "/src/*"
-  to   = "/src/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/@vite/*"
-  to   = "/@vite/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/node_modules/*"
-  to   = "/node_modules/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/assets/*"
-  to   = "/assets/:splat"
-  status = 200
+  framework  = "#custom"
 
 # --- SPA fallback only in production ---
 [context.production]
