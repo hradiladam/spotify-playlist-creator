@@ -160,22 +160,17 @@ This project has a test setup covering the app from small logic units to full br
 
 ## Roadmap
 
-- **Testing**
-  - Vitest unit and integration tests
-  - Playwright E2E + UI tests
-
-
  ## Planned improvement: 
 1. **CI/CD** - GitHub Actions CI
 2. Add a state value to the Spotify login flow. Right now PKCE login works without it, but Spotify suggests using it for safety.
 
-The idea:
-- When starting login(), create a random state string.
-- Save it in sessionStorage.
-- Add it to the /authorize URL.
-- Later in handleCallback(), check that the state from Spotify matches the one we saved.
-- If it doesn’t match, stop the login.
-- This way we make sure the callback really comes from our own login request and not from some bad redirect.
+    The idea:
+    - When starting login(), create a random state string.
+    - Save it in sessionStorage.
+    - Add it to the /authorize URL.
+    - Later in handleCallback(), check that the state from Spotify matches the one we saved.
+    - If it doesn’t match, stop the login.
+    - This way we make sure the callback really comes from our own login request and not from some bad redirect.
 
 
 ## Future Rework (New Features):
