@@ -20,6 +20,13 @@
 
 
 // ---------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------
+
+import type { TokenResponse } from "@/types/spotify-types";
+
+
+// ---------------------------------------------------------------------------
 // Spotify constants
 // ---------------------------------------------------------------------------
 
@@ -105,7 +112,7 @@ const generateCodeVerifier = (length = 64): string => {
  */
 const fetchToken = async (
 	payload: Record<string, string>
-): Promise<any> => {
+): Promise<TokenResponse> => {
 	const res = await fetch(TOKEN_ENDPOINT, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -117,7 +124,7 @@ const fetchToken = async (
 		throw new Error(`Token request failed (${res.status}): ${text}`);
 	}
 
-	return res.json();
+	return res.json() as Promise<TokenResponse>;
 };
 
 // ---------------------------------------------------------------------------

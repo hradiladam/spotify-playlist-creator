@@ -7,6 +7,8 @@ import { PlaylistComposer } from "@/components/PlaylistComposer";
 import { useAuth } from "@/hooks/useAuth"; // ⟵ previously proposed auth hook (keeps Home lean)
 import { useLocalPlaylist } from "@/hooks/useLocalPlaylist"; // ⟵ NEW: local playlist state
 import * as api from "@/api/spotify";
+import type { TrackSummary } from "@/api/spotify";
+
 
 export const Home = () => {
 	// ⟵ replace isAuthed/me state & effect with the hook:
@@ -39,15 +41,17 @@ export const Home = () => {
 			}
 			alert("Playlist saved to Spotify.");
 			// Keep local as-is so user can continue adding or discard manually
-		} catch (err: any) {
+
+		} catch (err: unknown) {
 			console.error(err);
-			alert(err?.message ?? "Failed to save playlist to Spotify.");
+			const message = err instanceof Error ? err.message : String(err);
+			alert(message || "Failed to save playlist to Spotify.");
 		}
 	};
 
 	// Save track from search results into local playlist
-	const handleSaveTrackFromResults = (track: { uri: string }) => {
-		const result = local.addTrack(track as any); // TrackSummary-compatible
+	const handleSaveTrackFromResults = (track: TrackSummary) => {
+		const result = local.addTrack(track);
 		if (!result.ok && result.reason === "no-playlist") {
 			alert("Create a local playlist first to save tracks.");
 		}
