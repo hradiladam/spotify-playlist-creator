@@ -1,6 +1,6 @@
 // TESTS/e2e/tests/e2e-app-flow.test.ts
 import { test, expect } from '@playwright/test';
-import { seedLoggedInSession } from '../helpers/e2e-auth-once';
+import { seedLoggedInSessionOnce  } from '../helpers/e2e-auth-once';
 import { stubMe, stubSearchTracks, stubCreatePlaylist, stubAddTracks } from '../helpers/stubs';
 import { HomePage } from '../pages/HomePage';
 
@@ -17,7 +17,7 @@ test('full flow: search → create → add track → save to Spotify', async ({ 
 	await home.goto();
 
 	// Pretend we’re logged in by seeding sessionStorage once
-	await seedLoggedInSession(page);
+	await seedLoggedInSessionOnce (page);
 
 	// Reload so the app re-reads the tokens and shows the logged-in UI
 	await page.reload();
@@ -51,7 +51,7 @@ test('adding a track increments saved counter', async ({ page }) => {
 
 	// Open app → seed tokens → reload to show logged-in UI
 	await home.goto();
-	await seedLoggedInSession(page);
+	await seedLoggedInSessionOnce (page);
 	await page.reload();
 	await home.assertLoggedInUI();
 
@@ -74,7 +74,7 @@ test('saving same track twice only counts once', async ({ page }) => {
 
 	// Start logged in in the UI
 	await home.goto();
-	await seedLoggedInSession(page);
+	await seedLoggedInSessionOnce (page);
 	await page.reload();
 	await home.assertLoggedInUI();
 
@@ -90,32 +90,24 @@ test('saving same track twice only counts once', async ({ page }) => {
 
 
 test('logout clears session and shows login screen', async ({ page }) => {
-	// We just need the /me stub so the logged-in UI can render at first
 	await stubMe(page);
-
 	const home = new HomePage(page);
 
-	// Open app → seed tokens → reload to show logged-in UI
 	await home.goto();
-	await seedLoggedInSession(page);
-	await page.reload();
+	await seedLoggedInSessionOnce(page);   // ⟵ one-shot seed
 	await home.assertLoggedInUI();
 
-	// Click the real Logout button in the UI
 	await home.logout();
 
-	// Wait until the app actually removed the tokens from sessionStorage
 	await page.waitForFunction(() =>
 		!sessionStorage.getItem('spotify_access_token') &&
 		!sessionStorage.getItem('spotify_refresh_token') &&
 		!sessionStorage.getItem('spotify_expires_at')
 	);
 
-	// Do a deterministic remount (same-URL reloads can be flaky in tests)
 	await page.goto('about:blank');
 	await home.goto();
 
-	// After remount with no tokens, the login button should be visible
 	await expect(page.getByRole('button', { name: /login with spotify/i })).toBeVisible();
 });
 
