@@ -35,6 +35,8 @@ export const useSpotifySearch = (initialQuery = "", delayMs = 400) => {
 			// Empty query (or only spaces) → clear results, skip API
 			if (!debouncedQuery.trim()) {
 				setResults([]);
+				setError(null);       // clear any prior error
+				setLoading(false);    // ensure loading is off
 				return;
 			}
 
@@ -52,6 +54,9 @@ export const useSpotifySearch = (initialQuery = "", delayMs = 400) => {
 			} catch (err: any) {
 				// Show error message if something goes wrong (network / API issue)
 				if (!cancelled) setError(err.message ?? "Unknown error");
+				
+				// Ensure loading is off
+				if (!cancelled) setLoading(false);
 			} finally {
 				// Hide spinner once request finishes
 				if (!cancelled) setLoading(false);
@@ -64,7 +69,12 @@ export const useSpotifySearch = (initialQuery = "", delayMs = 400) => {
 		return () => { cancelled = true; };
 	}, [debouncedQuery]);
 
-	const clear = useCallback(() => setQuery(""), []);
+	const clear = useCallback(() => {
+		setQuery("");
+		setResults([]);
+		setError(null);
+		setLoading(false);
+	}, []);
 
 	return { query, setQuery, results, loading, error, clear };
 };

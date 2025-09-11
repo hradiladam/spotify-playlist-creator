@@ -49,6 +49,13 @@ export const SearchBar = ({onSaveTrack}: {onSaveTrack?: (track: TrackSummary) =>
 			<div className={styles.statusSlot}>
 				{loading && <div className={styles.status}>Searching...</div>}
 				{error && <div className={styles.error}>{error}</div>}
+
+				{/* Empty results state: user searched, request finished, no error, and nothing found */}
+				{!loading && !error && query.trim() && results.length === 0 && (
+					<div className={styles.status} role="status" aria-live="polite">
+						No results found
+					</div>
+				)}
 			</div>
 
 			{/* Results list */}
