@@ -11,7 +11,9 @@
 		"lint": "eslint .",
 		"typecheck": "tsc -noEmit",
 		"test": "vitest",
-		"test:ci": "vitest run --coverage"
+		"test:ci": "vitest run --coverage",
+		"preview:ci": "vite preview --host 127.0.0.1 --port 4173",
+    	"test:e2e": "playwright test"
 	},
 	"dependencies": {
 		"@netlify/functions": "^4.2.2",
