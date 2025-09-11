@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request: {}
+  push:
+    branches: [ main ]  #CI on main pushes too
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+      - run: npm run lint
+
+      # Vitest (all projects)
+      - run: npm run test:ci
+        env:
+          CI: true
+
+      # Playwright: install browsers & OS deps
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      # E2E (ALL browsers) using your TESTS/e2e config
+      - name: Playwright (chromium, firefox, webkit)
+        run: npx playwright test --config TESTS/e2e/playwright.config.ts
+        env:
+          CI: true
+          PW_BROWSERS: all 
