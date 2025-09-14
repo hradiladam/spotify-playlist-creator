@@ -31,8 +31,7 @@ spotify-playlist-creator
 │   │   ├── helpers/ # E2E helpers (auth/session stubs)
 │   │   └── tests/ # E2E test
 │   └── setup/ # Shared MSW servers for tests
-└── postman-collection/
-    └── test-collection
+└── postman/postman_collection
 
 ```
 

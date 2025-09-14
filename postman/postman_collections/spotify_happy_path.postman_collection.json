@@ -1,0 +1,426 @@
+{
+	"info": {
+		"_postman_id": "8756824b-1015-464d-be1e-af3efe1525c9",
+		"name": "spotify_happy_path",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44160976"
+	},
+	"item": [
+		{
+			"name": "Get Current User (Me)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 OK\", () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"const me = pm.response.json();\r",
+							"\r",
+							"pm.test('has id', () => {\r",
+							"    pm.expect(me.id).to.be.a('string').and.not.empty\r",
+							"});\r",
+							"\r",
+							"// stash for later\r",
+							"pm.environment.set('me_id', me.id);\r",
+							"pm.environment.set('me_name', me.display_name || '');"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/me",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"me"
+					]
+				},
+				"description": "## Retrieve Current User's Profile\n\nThis endpoint allows you to retrieve the profile information of the currently authenticated user on Spotify.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `https://api.spotify.com/v1/me`\n    \n\n### Authentication\n\nThis request requires authentication via OAuth 2.0. Ensure that you have a valid access token and include it in the Authorization header as follows:\n\n```\nAuthorization: Bearer {access_token}\n\n ```\n\n### Response\n\nUpon successful completion of the request, the API will return a JSON object containing the user's profile information. The response will include details such as:\n\n- `display_name`: The user's display name.\n    \n- `email`: The user's email address.\n    \n- `id`: The user's unique Spotify ID.\n    \n- `images`: An array of images associated with the user's profile.\n    \n- `product`: The user's subscription level (e.g., free, premium).\n    \n\n### Notes\n\n- Ensure that the user has granted the necessary permissions to access their profile information.\n    \n- The response will return a 200 OK status code if the request is successful.\n    \n- If the access token is invalid or expired, a 401 Unauthorized status code will be returned.\n    \n\nThis endpoint is useful for applications that need to display user-specific information or customize experiences based on user preferences."
+			},
+			"response": []
+		},
+		{
+			"name": "Search Tracks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('200 OK', () => pm.response.to.have.status(200));\r",
+							"\r",
+							"const body = pm.response.json();\r",
+							"const items = body?.tracks?.items || [];\r",
+							"\r",
+							"pm.test('tracks.items is a non-empty array', () => {\r",
+							"    pm.expect(items).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// choose the first result (simple + deterministic enough for tests)\r",
+							"const first = items[0];\r",
+							"\r",
+							"// stash for later requests\r",
+							"pm.environment.set('first_track_uri', first.uri);\r",
+							"pm.environment.set('first_track_name', first.name);\r",
+							"\r",
+							"// sanity: verify we actually set it\r",
+							"pm.test('saved first_track_uri', () => {\r",
+							"    pm.expect(pm.environment.get('first_track_uri')).to.be.a('string').and.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/search?type=track&limit=4&q={{search_q}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"search"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "track"
+						},
+						{
+							"key": "limit",
+							"value": "4"
+						},
+						{
+							"key": "q",
+							"value": "{{search_q}}"
+						}
+					]
+				},
+				"description": "## API Endpoint: Search for Tracks\n\nThis endpoint allows you to search for tracks on Spotify based on a query string. It returns a list of tracks that match the specified search criteria, enabling users to discover music based on their interests.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `https://api.spotify.com/v1/search`\n    \n\n#### Query Parameters\n\n- `type` (string, required): Specifies the type of item to search for. In this case, it should be set to `track`.\n    \n- `limit` (integer, optional): The maximum number of results to return. In this example, it is set to `4`.\n    \n- `q` (string, required): The search query string. This is the term you want to search for, such as an artist name, song title, or album name.\n    \n\n### Response\n\n- **Status Code**: 200 OK\n    \n- **Content-Type**: application/json\n    \n\n#### Response Body Structure\n\nThe response contains a JSON object with the following structure:\n\n- `tracks`: An object containing information about the search results.\n    \n    - `href`: A link to the full list of tracks.\n        \n    - `limit`: The maximum number of tracks returned.\n        \n    - `next`: A link to the next set of results, if available.\n        \n    - `offset`: The index of the first track returned.\n        \n    - `previous`: A link to the previous set of results, if available.\n        \n    - `total`: The total number of tracks found.\n        \n    - `items`: An array of track objects, each containing:\n        \n        - `album`: Details about the album the track belongs to, including:\n            \n            - `album_type`: The type of album.\n                \n            - `artists`: An array of artist objects associated with the track.\n                \n            - `available_markets`: Markets where the album is available.\n                \n            - `external_urls`: External links to the album on Spotify.\n                \n            - `id`: The unique identifier for the album.\n                \n            - `images`: An array of images associated with the album.\n                \n            - `is_playable`: Indicates if the album is playable.\n                \n            - `name`: The name of the album.\n                \n            - `release_date`: The release date of the album.\n                \n            - `total_tracks`: The total number of tracks in the album.\n                \n        - `artists`: An array of artist objects associated with the track.\n            \n        - `available_markets`: Markets where the track is available.\n            \n        - `disc_number`: The disc number for multi-disc albums.\n            \n        - `duration_ms`: The duration of the track in milliseconds.\n            \n        - `explicit`: Indicates if the track contains explicit content.\n            \n        - `external_ids`: External identifiers for the track.\n            \n        - `external_urls`: External links to the track on Spotify.\n            \n        - `id`: The unique identifier for the track.\n            \n        - `is_local`: Indicates if the track is a local file.\n            \n        - `is_playable`: Indicates if the track is playable.\n            \n        - `name`: The name of the track.\n            \n        - `popularity`: The popularity score of the track.\n            \n        - `preview_url`: A link to a preview of the track.\n            \n        - `track_number`: The track number on the album.\n            \n\n### Notes\n\n- Ensure that you have the necessary authentication to access this endpoint.\n    \n- The search results are limited by the `limit` parameter, which can be adjusted as needed.\n    \n- The response may contain multiple items, or none, depending on the search query."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Playlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('201 Created', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"});\r",
+							"\r",
+							"const p = pm.response.json();\r",
+							"\r",
+							"pm.test('has id', () => {\r",
+							"    pm.expect(p.id).to.be.a('string').and.not.empty\r",
+							"});\r",
+							"\r",
+							"// stash for later\r",
+							"pm.environment.set('playlist_id', p.id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Postman Test {{$isoTimestamp}}\",\r\n  \"public\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/users/{{me_id}}/playlists",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{me_id}}",
+						"playlists"
+					]
+				},
+				"description": "\n## Create a Playlist\n\nThis endpoint allows users to create a new playlist in their Spotify account. The request requires the user's ID to specify where the playlist will be created and includes parameters to define the playlist's properties.\n\n### Request\n\n- **Method**: POST\n    \n- **URL**: `https://api.spotify.com/v1/users/{{me_id}}/playlists`\n    \n- **Headers**:\n    \n    - `Authorization`: Bearer token for authentication\n        \n    - `Content-Type`: application/json\n        \n\n#### Request Body Parameters\n\n- **name** (string): The name of the playlist. This is a required field.\n    \n- **public** (boolean): Indicates whether the playlist is public. If set to `false`, the playlist will be private.\n\n**Example Request Body**:\n\n``` json\n{\n  \"name\": \"Postman Test {{$isoTimestamp}}\",\n  \"public\": false\n}\n```\n\n### Response\n\nUpon successfully creating a playlist, the API will return a `201 Created` status along with a JSON response containing details about the newly created playlist.\n\n#### Expected Response Format\n\nThe response will be in JSON format and will include the following fields:\n\n- **collaborative** (boolean): Indicates if the playlist is collaborative.\n    \n- **description** (string): A description of the playlist (if provided).\n    \n- **external_urls** (object): Contains external URLs for the playlist, including a link to Spotify.\n    \n- **followers** (object): Information about the followers of the playlist, including total count.\n    \n- **href** (string): A link to the playlist.\n    \n- **id** (string): The unique identifier for the playlist.\n    \n- **images** (array): An array of images associated with the playlist.\n    \n- **name** (string): The name of the playlist.\n    \n- **type** (string): The type of resource (in this case, \"playlist\").\n    \n- **uri** (string): The Spotify URI for the playlist.\n    \n- **owner** (object): Information about the owner of the playlist, including their ID and display name.\n    \n- **public** (boolean): Indicates if the playlist is public.\n    \n- **snapshot_id** (string): A unique identifier for the playlist's current state.\n    \n- **tracks** (object): Information about the tracks in the playlist, including the total number of tracks and pagination details.\n\n**Example Response**:\n\n``` json\n{\n  \"collaborative\": true,\n  \"description\": \"\",\n  \"external_urls\": {\"spotify\": \"\"},\n  \"followers\": {\"href\": null, \"total\": 0},\n  \"href\": \"\",\n  \"id\": \"\",\n  \"images\": [],\n  \"primary_color\": null,\n  \"name\": \"\",\n  \"type\": \"\",\n  \"uri\": \"\",\n  \"owner\": {\n    \"href\": \"\",\n    \"id\": \"\",\n    \"type\": \"\",\n    \"uri\": \"\",\n    \"display_name\": null,\n    \"external_urls\": {\"spotify\": \"\"}\n  },\n  \"public\": true,\n  \"snapshot_id\": \"\",\n  \"tracks\": {\n    \"limit\": 0,\n    \"next\": null,\n    \"offset\": 0,\n    \"previous\": null,\n    \"href\": \"\",\n    \"total\": 0,\n    \"items\": []\n  }\n}\n```\n\n### Notes\n\n- Ensure that the user is authenticated and has the necessary permissions to create a playlist.\n    \n- The `public` parameter can be toggled based on user preference.\n    \n- The API response will provide details about the created playlist, which can be used for further interactions with the playlist.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Track To Playlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 or 201\", () => {\r",
+							"    pm.expect([200, 201]).to.include(pm.response.code);\r",
+							"});\r",
+							"\r",
+							"let snapshot;\r",
+							"try {\r",
+							"    snapshot = pm.response.json().snapshot_id;\r",
+							"\r",
+							"} catch (e) {\r",
+							"    snapshot = null;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"if (snapshot) {\r",
+							"    pm.test(\"has snapshot_id\", () => {\r",
+							"        pm.expect(snapshot).to.be.a(\"string\").and.not.empty;\r",
+							"    });\r",
+							"    pm.environment.set(\"snapshot_id\", snapshot);\r",
+							"\r",
+							"} else {\r",
+							"    console.log(\"No snapshot_id in response — still valid if 201 with no body.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.expect(pm.environment.get('playlist_id'), 'playlist_id not set').to.be.a('string').and.not.empty;\r",
+							"pm.expect(pm.environment.get('first_track_uri'), 'first_track_uri not set').to.be.a('string').and.not.empty;\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"uris\": [\"{{first_track_uri}}\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{{playlist_id}}/tracks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{{playlist_id}}",
+						"tracks"
+					]
+				},
+				"description": "\n## Add Tracks to a Playlist\n\nThis endpoint allows users to add tracks to a specified Spotify playlist. By providing the URIs of the tracks, you can enhance your playlist with new music.\n\n### Request\n\n- **Method**: `POST`\n- **Endpoint**: `https://api.spotify.com/v1/playlists/{{playlist_id}}/tracks`\n\n### Request Body\n\nThe request body should be in JSON format and contain the following parameter:\n\n- **uris** (Array of Strings): An array of track URIs that you want to add to the playlist. Each URI should be a valid Spotify track URI.\n\n#### Example Request Body\n\n```json\n{\n  \"uris\": [\"{{first_track_uri}}\"]\n}\n```\n\n### Response\n\nOn a successful request, the API will return a `201 Created` status code along with a JSON response containing:\n\n- **snapshot_id** (String): A snapshot ID of the playlist after the tracks have been added. This can be used to identify the current state of the playlist.\n\n#### Example Response\n\n```json\n{\n  \"snapshot_id\": \"\"\n}\n```\n\n### Additional Notes\n\n- Ensure that the `playlist_id` is valid and that you have the necessary permissions to modify the playlist.\n- The `track_uri` should be a valid URI for tracks available on Spotify.\n- This operation can be performed multiple times to add multiple tracks in a single request.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Playlist (Unfollow)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('200 or 204', () => {\r",
+							"    pm.expect([200,204]).to.include(pm.response.code)\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// cleanup: clear no-longer-needed vars\r",
+							"[\"me_id\", \"me_name\", \"search_q\", \"first_track_uri\", \"first_track_name\", \"playlist_id\", \"snapshot_id\"]\r",
+							"  .forEach(v => pm.environment.unset(v));\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{{playlist_id}}/followers",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{{playlist_id}}",
+						"followers"
+					]
+				},
+				"description": "\n## Delete Playlist Followers\n\nThis endpoint allows you to remove the followers from a specified playlist on Spotify.\n\n### Request\n\n- **Method**: DELETE\n- **URL**: `https://api.spotify.com/v1/playlists/{{playlist_id}}/followers`\n\n#### Path Parameters\n\n- `playlist_id` (string): The unique identifier of the playlist from which you want to remove followers.\n\n### Response\n\n- **Status Code**: 400 Bad Request\n- **Content-Type**: application/json\n\nThe response indicates that there was an error with the request. The body of the response will contain an error object with a status and message, which can provide further details about the issue encountered.\n\n### Notes\n\n- Ensure that you have the necessary permissions to modify the playlist's followers.\n- This operation is irreversible; once followers are removed, they will no longer have access to the playlist unless they are re-added.\n"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "scope",
+				"value": "user-read-email user-read-private playlist-modify-private playlist-modify-public",
+				"type": "string"
+			},
+			{
+				"key": "refreshRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "tokenRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "authRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "tokenName",
+				"value": "spotify_API_custom",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/callback",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code_with_pkce",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{vault:Client ID}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://accounts.spotify.com/authorize",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://accounts.spotify.com/api/token",
+				"type": "string"
+			},
+			{
+				"key": "tokenType",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

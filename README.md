@@ -41,7 +41,7 @@ src/
     App.tsx
     main.tsx
 netlify/functions/spotify-token.ts
-postman-collection
+postman/postman_collections
 TESTS/
 ```
 
